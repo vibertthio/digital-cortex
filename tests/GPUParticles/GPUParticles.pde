@@ -25,7 +25,7 @@ FloatBuffer posBuffer;
 FloatBuffer colorBuffer;
 IntBuffer indexBuffer;
 
-//
+// VBO IDs
 int posVboId;
 int colorVboId;
 int indexVboId;
