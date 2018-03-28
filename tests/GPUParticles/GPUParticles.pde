@@ -54,21 +54,21 @@ void setup() {
   gl = pgl.gl.getGL2ES2();
 
   // Get GL ids for all the buffers
-  // IntBuffer intBuffer = IntBuffer.allocate(3);
-  // gl.glGenBuffers(3, intBuffer);
-  // posVboId = intBuffer.get(0);
-  // colorVboId = intBuffer.get(1);
-  // indexVboId = intBuffer.get(2);
-  posVboId = 0;
-  colorVboId = 1;
-  indexVboId = 2;
- 
+  IntBuffer intBuffer = IntBuffer.allocate(3);
+  gl.glGenBuffers(3, intBuffer);
+  posVboId = intBuffer.get(0);
+  colorVboId = intBuffer.get(1);
+  indexVboId = intBuffer.get(2);
+  // posVboId = 0;
+  // colorVboId = 1;
+  // indexVboId = 2;
+
   // Get the location of the attribute variables.
   shader.bind();
   posLoc = gl.glGetAttribLocation(shader.glProgram, "position");
   colorLoc = gl.glGetAttribLocation(shader.glProgram, "color");
   shader.unbind();
-  
+
   // posLos: 1, colorLos: 0
   println("posLoc: " + posLoc);
   println("colorLoc: " + colorLoc);
