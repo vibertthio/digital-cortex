@@ -11,7 +11,7 @@ import com.jogamp.opengl.GL2ES2;
 //   1, LINES
 //   2, TRIANGLES
 int MODE = 0;
-int nOfP = 5000;
+int nOfP = 2000;
 
 PShader shader;
 float angle;
@@ -85,6 +85,7 @@ void draw() {
 
   translate(width / 2, height / 2);
   angle += 0.01;
+  rotateY(angle * 0.5);
   // rotateX(angle);
   // rotateY(0.2 * PI * cos(angle));
   // rotateZ(0.5 * PI * sin(angle));
@@ -102,6 +103,7 @@ void glDraw() {
   gl = pgl.gl.getGL2ES2();
 
   shader.bind();
+  updateShader();
   gl.glEnableVertexAttribArray(posLoc);
   gl.glEnableVertexAttribArray(colorLoc);
 
@@ -121,10 +123,10 @@ void glDraw() {
   pgl.bufferData(PGL.ELEMENT_ARRAY_BUFFER, Integer.BYTES * indices.length, indexBuffer, GL.GL_DYNAMIC_DRAW);
   switch(MODE) {
     case 0:
-      gl.glDrawElements(PGL.POINTS, colors.length / 4, GL.GL_UNSIGNED_INT, 0);
+      gl.glDrawElements(PGL.POINTS, indices.length, GL.GL_UNSIGNED_INT, 0);
       break;
     case 1:
-      gl.glDrawElements(PGL.LINES, colors.length / 4, GL.GL_UNSIGNED_INT, 0);
+      gl.glDrawElements(PGL.LINES, indices.length, GL.GL_UNSIGNED_INT, 0);
       break;
     case 2:
       gl.glDrawElements(PGL.TRIANGLES, indices.length, GL.GL_UNSIGNED_INT, 0);
@@ -140,6 +142,8 @@ void glDraw() {
 
   endPGL();
 }
+
+// Geometry
 void initGeometry() {
   for (int i = 0; i < nOfP; i++) {
     int j = 4 * i;
@@ -147,13 +151,75 @@ void initGeometry() {
     positions[j + 1] = random(-300, 300);
     positions[j + 2] = random(-300, 300);
     positions[j + 3] = 1;
-    colors[j] = 1;
-    colors[j + 1] = 1;
-    colors[j + 2] = 1;
+    // colors[j] = 1;
+    colors[j] = random(1);
+    colors[j + 1] = random(0.5);
+    colors[j + 2] = 0.8;
+    // colors[j + 3] = random(0.5);
     colors[j + 3] = 1;
     indices[i] = i;
   }
 }
+void setSphere() {
+  float r = 200;
+  // float theta = random(1) * PI * 2;
+  for (int i = 0; i < nOfP; i++) {
+    int j = 4 * i;
+    float theta = random(1) * PI * 2;
+    // theta += random(0.05);
+    float zpos = random(1) * 2 - 1;
+    float rsin = sqrt(1 - zpos * zpos);
+
+    float xpos = rsin * cos(theta);
+    float ypos = rsin * sin(theta);
+
+    positions[j] = r * xpos;
+    positions[j + 1] = r * ypos;
+    positions[j + 2] = r * zpos;
+    positions[j + 3] = 1;
+    // colors[j] = 1;
+    // colors[j + 1] = 1;
+    // colors[j + 2] = 1;
+    // colors[j + 3] = 1;
+    if (i % 2 == 0) {
+      indices[i] = i / 2;
+      indices[i + 1] = i / 2 + 1;
+    }
+  }
+}
+void setGeometry() {
+  float r = 200;
+  for (int i = 0; i < nOfP; i++) {
+    int j = 4 * i;
+
+    if (random(1) > 0.3) {
+      float theta = random(1) * PI * 2;
+      float zpos = random(1) * 2 - 1;
+      float rsin = sqrt(1 - zpos * zpos);
+
+      float xpos = rsin * cos(theta);
+      float ypos = rsin * sin(theta);
+
+      positions[j] = r * xpos;
+      positions[j + 1] = r * ypos;
+      positions[j + 2] = r * zpos;
+      positions[j + 3] = 1;
+    } else {
+      positions[j] = random(-300, 300);
+      positions[j + 1] = random(-300, 300);
+      positions[j + 2] = random(-300, 300);
+      positions[j + 3] = 1;
+      indices[i] = i;
+    }
+
+    // colors[j] = 1;
+    // colors[j + 1] = 1;
+    // colors[j + 2] = 1;
+    // colors[j + 3] = 1;
+    indices[i] = i;
+  }
+}
+
 void updateGeometry() {
   posBuffer.rewind();
   posBuffer.put(positions);
@@ -167,6 +233,9 @@ void updateGeometry() {
   indexBuffer.put(indices);
   indexBuffer.rewind();
 }
+void updateShader() {
+  shader.set("uTime", millis() / 1000.0);
+}
 void keyPressed() {
   if (key == '1') {
     MODE = 0;
@@ -178,5 +247,11 @@ void keyPressed() {
 
   if (key == ' ') {
     initGeometry();
+  }
+  if (key == 'z') {
+    setGeometry();
+  }
+  if (key == 'x') {
+    setSphere();
   }
 }
