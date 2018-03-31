@@ -6,12 +6,14 @@ import java.nio.IntBuffer;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2ES2;
 
+import peasy.*;
+
 // MODE:
 //   0, POINTS
 //   1, LINES
 //   2, TRIANGLES
 int MODE = 0;
-int nOfP = 2000;
+int nOfP = 4000;
 
 PShader shader;
 float angle;
@@ -36,8 +38,13 @@ int colorLoc;
 PJOGL pgl;
 GL2ES2 gl;
 
+PeasyCam cam;
+
 void setup() {
-  size(800, 600, P3D);
+  size(960, 540, P3D);
+  cam = new PeasyCam(this, 100);
+  cam.setMinimumDistance(100);
+  cam.setMaximumDistance(500);
 
   // shaders initialization
   shader = loadShader("frag.glsl", "vert.glsl");
@@ -83,14 +90,25 @@ void draw() {
   showFrameRate();
   background(0);
 
-  translate(width / 2, height / 2);
+  // translate(width / 2, height / 2);
+  // shader(shader);
+  noStroke();
+  ambientLight(246, 36, 89);
+  spotLight(249, 191, 59, 0, 0, 500, 0, 0, -1, PI/4, 2);
+  // directionalLight(0, 255, 0, 0, -1, 0);
+
+  pushMatrix();
+  rotateY(angle * 0.1);
+  // sphere(50.0);
+  box(50.0);
+  popMatrix();
   angle += 0.01;
-  rotateY(angle * 0.5);
   // rotateX(angle);
   // rotateY(0.2 * PI * cos(angle));
   // rotateZ(0.5 * PI * sin(angle));
   updateGeometry();
   glDraw();
+
 }
 
 void glDraw() {
@@ -138,6 +156,7 @@ void glDraw() {
 
   gl.glDisableVertexAttribArray(posLoc);
   gl.glDisableVertexAttribArray(colorLoc);
+
   shader.unbind();
 
   endPGL();
@@ -160,39 +179,12 @@ void initGeometry() {
     indices[i] = i;
   }
 }
-void setSphere() {
-  float r = 200;
-  // float theta = random(1) * PI * 2;
-  for (int i = 0; i < nOfP; i++) {
-    int j = 4 * i;
-    float theta = random(1) * PI * 2;
-    // theta += random(0.05);
-    float zpos = random(1) * 2 - 1;
-    float rsin = sqrt(1 - zpos * zpos);
-
-    float xpos = rsin * cos(theta);
-    float ypos = rsin * sin(theta);
-
-    positions[j] = r * xpos;
-    positions[j + 1] = r * ypos;
-    positions[j + 2] = r * zpos;
-    positions[j + 3] = 1;
-    // colors[j] = 1;
-    // colors[j + 1] = 1;
-    // colors[j + 2] = 1;
-    // colors[j + 3] = 1;
-    if (i % 2 == 0) {
-      indices[i] = i / 2;
-      indices[i + 1] = i / 2 + 1;
-    }
-  }
-}
 void setGeometry() {
   float r = 200;
   for (int i = 0; i < nOfP; i++) {
     int j = 4 * i;
 
-    if (random(1) > 0.3) {
+    if (random(1) > 0.1) {
       float theta = random(1) * PI * 2;
       float zpos = random(1) * 2 - 1;
       float rsin = sqrt(1 - zpos * zpos);
@@ -212,11 +204,135 @@ void setGeometry() {
       indices[i] = i;
     }
 
-    // colors[j] = 1;
-    // colors[j + 1] = 1;
-    // colors[j + 2] = 1;
-    // colors[j + 3] = 1;
     indices[i] = i;
+  }
+}
+void setSphereEven() {
+  float r = 200;
+  float theta = random(1) * PI * 2;
+  float zpos = random(1) * 2 - 1;
+  for (int i = 0; i < nOfP; i++) {
+    int j = 4 * i;
+    theta += random(0.05) * PI;
+    zpos += random(0.01);
+    if (zpos > 1) {
+      zpos -= 2;
+    }
+
+    float rsin = sqrt(1 - zpos * zpos);
+
+    float xpos = rsin * cos(theta);
+    float ypos = rsin * sin(theta);
+
+    positions[j] = r * xpos;
+    positions[j + 1] = r * ypos;
+    positions[j + 2] = r * zpos;
+    positions[j + 3] = 1;
+    if (i % 2 == 0) {
+      indices[i] = i / 2;
+      indices[i + 1] = i / 2 + 1;
+    }
+  }
+}
+void setSphere() {
+  float r = 200;
+  float theta = random(1) * PI * 2;
+  float phi = random(1) * PI;
+
+
+  for (int i = 0; i < nOfP; i++) {
+    int j = 4 * i;
+    theta += random(0.1, 0.2) * PI;
+    phi += random(0.01) * PI;
+
+    float xpos = sin(phi) * cos(theta);
+    float zpos = sin(phi) * sin(theta);
+    float ypos = cos(phi);
+
+    positions[j] = r * xpos;
+    positions[j + 1] = r * ypos;
+    positions[j + 2] = r * zpos;
+    positions[j + 3] = 1;
+    if (i % 4 == 0) {
+      indices[i] = i / 2;
+      indices[i + 1] = i / 2 + 1;
+      if (i < nOfP - 2) {
+        indices[i + 2] = i / 2;
+        indices[i + 3] = i / 2 + 2;
+      }
+    }
+  }
+}
+void setPlane() {
+  for (int i = 0; i < nOfP; i++) {
+    int j = 4 * i;
+    positions[j] = random(-500, 500);
+    positions[j + 1] = random(50, 100);
+    positions[j + 2] = random(-500, 500);
+    positions[j + 3] = 1;
+    indices[i] = i;
+  }
+}
+void setSquare() {
+  for (int i = 0; i < nOfP; i++) {
+    int j = 4 * i;
+    positions[j] = random(-100, 100);
+    positions[j + 1] = random(-100, 100);
+    positions[j + 2] = 100;
+    positions[j + 3] = 1;
+    indices[i] = i;
+  }
+}
+
+void setStrip() {
+  float xpos = -500;
+  float ypos = -300;
+  int connection = 10;
+  float xDes = 13;
+  boolean right = true;
+  for (int i = 0; i < nOfP; i++) {
+    int j = 4 * i;
+
+    if (right) {
+      xpos += random(10, 40);
+    } else {
+      xpos -= random(10, 40);
+    }
+    float y = ypos + 150 * noise(5.0 * (i + frameCount));
+    positions[j] = xpos;
+    positions[j + 1] = y;
+    positions[j + 2] = 0;
+    positions[j + 3] = 1;
+    if (xpos > 500) {
+      right = !right;
+      ypos += 100;
+      xpos = 500;
+    } else if (xpos < -500) {
+      right = !right;
+      ypos += 100;
+      xpos = -500;
+    }
+    if (i % connection == 0) {
+      for (int k = 0; k < connection; k++) {
+        if (k % 2 == 0) {
+          indices[i + k] = i / connection;
+        } else {
+          indices[i + k] = i / connection + k / 2;
+        }
+      }
+      // if (xpos > 500 || xpos < -500) {
+      //   right = !right;
+      //   ypos += 100;
+      // } else {
+      //   for (int k = 0; k < connection; k++) {
+      //     if (k % 2 == 0) {
+      //       indices[i + k] = i / connection;
+      //     } else {
+      //       indices[i + k] = i / connection + k / 2;
+      //     }
+      //   }
+      // }
+    }
   }
 }
 
@@ -234,7 +350,7 @@ void updateGeometry() {
   indexBuffer.rewind();
 }
 void updateShader() {
-  shader.set("uTime", millis() / 1000.0);
+  shader.set("uTime", millis() / 200.0);
 }
 void keyPressed() {
   if (key == '1') {
@@ -245,13 +361,19 @@ void keyPressed() {
     MODE = 2;
   }
 
-  if (key == ' ') {
-    initGeometry();
-  }
   if (key == 'z') {
     setGeometry();
   }
   if (key == 'x') {
     setSphere();
+  }
+  if (key == 'c') {
+    setPlane();
+  }
+  if (key == 'v') {
+    setStrip();
+  }
+  if (key == 'b') {
+    initGeometry();
   }
 }
