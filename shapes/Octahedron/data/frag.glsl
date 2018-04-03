@@ -32,7 +32,7 @@ void main() {
   vec3 v = normalize(vPosition);
   vec3 rgb = (1.0 - now) * vec3(1.0) + convertHsvToRgb(vec3(
     0.5 + (v.x + v.y + v.x) / 40.0 + uTime * 0.1,
-    0.8,
+    0.9,
     0.4 + sin(uTime) * 0.05 + vNoise * 0.02)
   );
 

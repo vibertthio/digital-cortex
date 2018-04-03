@@ -172,6 +172,8 @@ float cnoise(vec3 P)
 }
 
 
+float smoothy = 0.005;
+float wave = 20.0;
 
 void main() {
   float now = exponentialOut(max((uTime - delayAll - delay - (faceNormal.x + 1.0) / 2.0 - (faceNormal.y + 1.0) / 2.0) / duration, 0.0));
@@ -180,7 +182,7 @@ void main() {
   float rotateRadian = radians((uTime + faceNormal.x + faceNormal.y) * 1440.0);
   mat4 rotateMatSelf = computeRotateMat(rotateRadian, rotateRadian, 0.0);
   // mat4 rotateMatSelf = computeRotateMat(0.0, 0.0, 0.0);
-  float noise = smoothstep(-0.4, 0.4, cnoise(vec3(position.x * 0.035 - uTime, position.y * 0.035 - uTime, position.z * 0.035 + uTime))) * 5.0 - 1.0;
+  float noise = smoothstep(-0.4, 0.4, cnoise(vec3(position.x * smoothy - uTime, position.y * smoothy - uTime, position.z * smoothy + uTime))) * wave - 1.0;
 
   vec3 updatePositionSelf = (rotateMatSelf * vec4(position.xyz - center, 1.0)).xyz * (1.0 - now) + position.xyz + normalize(position.xyz) * noise;
   vec4 updatePosition = rotateMat * translateMat * vec4(updatePositionSelf, 1.0);
