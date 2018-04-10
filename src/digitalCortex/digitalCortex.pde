@@ -9,7 +9,8 @@ PFont font;
 float unit;
 
 void setup() {
-  size(960, 540, OPENGL);
+  // size(960, 540, OPENGL);
+  fullScreen(OPENGL);
   smooth(8);
   unit = height / 9;
 
