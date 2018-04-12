@@ -1,7 +1,3 @@
-class GlowRects {
-
-}
-
 class GlowRect {
 
   float renderW;
@@ -31,17 +27,50 @@ class GlowRect {
 
   void render(PGraphics src) {
     src.beginDraw();
-    src.background(0);
+    if (colorReverse) {
+      src.background(255);
+    } else {
+      src.background(0);
+    }
     // src.lights();
     src.translate(width / 2, height / 2);
     // src.rotateX(frameCount * 0.005f);
     src.rectMode(CENTER);
     src.noStroke();
-    src.fill(255);
-    src.rect(0, 0, renderW, renderH);
+    if (colorReverse) {
+      src.fill(0);
+    } else {
+      src.fill(255);
+    }
 
+    src.rect(0, 0, renderW, renderH);
     src.endDraw();
   }
 
+}
+
+void drawText() {
+  float rand = random(1);
+  if (rand > 0.95) {
+    boxStr += newWord();
+  } else if (rand > 0.9) {
+    boxStr = "" + newWord();
+  } else if (rand > 0.88) {
+    boxStr = "";
+  }
+
+  translate(width / 2, height / 2);
+  textFont(font);
+  textSize(16);
+  textAlign(CENTER, CENTER);
+  if (colorReverse) {
+    fill(255);
+  } else {
+    fill(0);
+  }
+  text(boxStr, 0, 0);
+}
+
+class GlowRects {
 
 }

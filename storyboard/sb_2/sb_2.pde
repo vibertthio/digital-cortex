@@ -3,10 +3,12 @@ PGraphics src;
 GlowRect rec;
 GlowManager glowManager;
 
-String str = "";
+String boxStr = "";
 PFont font;
 
 float unit;
+
+boolean colorReverse = false;
 
 void setup() {
   size(960, 540, OPENGL);
@@ -25,27 +27,8 @@ void draw() {
   drawText();
 }
 
-
 char newWord() {
   return char(int(random(33, 127)));
-}
-
-void drawText() {
-  float rand = random(1);
-  if (rand > 0.95) {
-    str += newWord();
-  } else if (rand > 0.9) {
-    str = "" + newWord();
-  } else if (rand > 0.88) {
-    str = "";
-  }
-
-  translate(width / 2, height / 2);
-  textFont(font);
-  textSize(16);
-  textAlign(CENTER, CENTER);
-  fill(0);
-  text(str, 0, 0);
 }
 
 void initGlow() {
@@ -54,4 +37,10 @@ void initGlow() {
   glowManager.blur.set("blurSize", 7);
   glowManager.blur.set("sigma", 3.0f);
   glowManager.glowShader.set("BlendMode", 1);
+}
+
+void keyPressed() {
+  if (key == '1') {
+    colorReverse = !colorReverse;
+  }
 }
