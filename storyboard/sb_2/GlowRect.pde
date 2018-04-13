@@ -5,9 +5,11 @@ class GlowRect {
   float targetW;
   float targetH;
 
+  float alpha = 255;
+
   GlowRect() {
-    renderW = unit * 2;
-    renderH = unit * 2;
+    renderW = unit * 3;
+    renderH = unit * 3;
   }
 
   PGraphics drawGlow(PGraphics src) {
@@ -38,9 +40,9 @@ class GlowRect {
     src.rectMode(CENTER);
     src.noStroke();
     if (colorReverse) {
-      src.fill(0);
+      src.fill(255 - alpha);
     } else {
-      src.fill(255);
+      src.fill(alpha);
     }
 
     src.rect(0, 0, renderW, renderH);

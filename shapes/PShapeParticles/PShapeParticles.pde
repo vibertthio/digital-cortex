@@ -37,7 +37,7 @@ PShape createParticles(int nOfP) {
   s.beginShape(TRIANGLES);
 
   float r = 300;
-  float smooth = 4.0;
+  float smooth = 0.8;
   for (int i = 0; i < nOfP; i++) {
     int j = 4 * i;
     float theta = random(1) * PI * 2;
@@ -46,12 +46,14 @@ PShape createParticles(int nOfP) {
     float xpos = rsin * cos(theta);
     float ypos = rsin * sin(theta);
 
-    float ns = noise(xpos * smooth, ypos * smooth, zpos * smooth);
+    float ns = noise(xpos * smooth + ypos * smooth + zpos * smooth, frameCount * smooth * 0.5);
     ns *= ns;
     float sz = 1.0;
     s.noStroke();
     // s.attribPosition("col", random(1), random(1), random(0.1));
-    s.attribPosition("col", random(0.7), random(1), random(0.1));
+    float alpha = random(0.5, 1);
+    // s.attribPosition("col", random(0.7), random(1), random(0.1));
+    s.attribPosition("col", alpha, alpha, alpha);
 
     s.attrib("noise", ns);
     s.vertex(r * xpos, r * ypos, r * zpos);

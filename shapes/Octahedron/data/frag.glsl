@@ -28,11 +28,13 @@ void main() {
 
   float diff = (dot(normal, light) + 1.0) / 2.0 * 0.2;
   float opacity = smoothstep(0.1, 0.2, vNow);
+  // float opacity = 0.1;
 
   vec3 v = normalize(vPosition);
   vec3 rgb = (1.0 - now) * vec3(1.0) + convertHsvToRgb(vec3(
     0.5 + (v.x + v.y + v.x) / 40.0 + uTime * 0.1,
-    0.9,
+    // 0.9,
+    0.0,
     0.4 + sin(uTime) * 0.05 + vNoise * 0.02)
   );
 
