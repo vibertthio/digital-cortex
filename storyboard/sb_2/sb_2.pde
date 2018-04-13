@@ -7,7 +7,10 @@ String boxStr = "";
 PFont font;
 
 float unit;
+float rectWidth;
 
+int mode = 1;
+int triggerCount = 0;
 boolean colorReverse = false;
 
 import oscP5.*;
@@ -22,6 +25,7 @@ void setup() {
   // size(1920, 1080, OPENGL);
   smooth(8);
   unit = height / 9;
+  rectWidth = unit * 3;
 
   src = createGraphics(width, height, P3D);
   initGlow();
@@ -34,9 +38,29 @@ void setup() {
 
 void draw() {
   showFrameRate();
-  PGraphics graphics = rec.drawGlow(src);
+  src.beginDraw();
+
+  if (mode == 0) {
+    rec.draw(src);
+  } else if (mode == 1) {
+    randomHorizontalLines(src);
+    if (triggerCount-- < 1) {
+      mode = 0;
+    }
+  } else if (mode == 2) {
+    randomVerticalLines(src);
+    if (triggerCount-- < 1) {
+      mode = 0;
+    }
+  }
+
+  src.endDraw();
+  PGraphics graphics = glowManager.dowGlow(src);
   image(graphics, 0, 0);
-  drawText();
+
+  if (mode == 0) {
+    drawText();
+  }
 }
 
 
@@ -53,12 +77,15 @@ void keyPressed() {
     colorReverse = !colorReverse;
   }
   if (key == '2') {
-    glowManager.blur.set("blurSize", 50.0f);
-    glowManager.blur.set("sigma", 25.0f);
+    mode = 0;
   }
   if (key == '3') {
-    glowManager.blur.set("blurSize", 7.0f);
-    glowManager.blur.set("sigma", 3.0f);
+    mode = 1;
+    triggerCount = 10;
+  }
+  if (key == '4') {
+    mode = 2;
+    triggerCount = 10;
   }
 }
 
