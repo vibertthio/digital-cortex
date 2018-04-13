@@ -71,6 +71,10 @@ void drawText() {
   text(boxStr, 0, 0);
 }
 
+char newWord() {
+  return char(int(random(33, 127)));
+}
+
 class GlowRects {
 
 }

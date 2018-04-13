@@ -27,9 +27,6 @@ void draw() {
   drawText();
 }
 
-char newWord() {
-  return char(int(random(33, 127)));
-}
 
 void initGlow() {
   glowManager = new GlowManager();
