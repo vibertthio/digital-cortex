@@ -9,7 +9,7 @@ PFont font;
 float unit;
 float rectWidth;
 
-int mode = 1;
+int mode = 0;
 int triggerCount = 0;
 boolean colorReverse = false;
 
@@ -30,11 +30,15 @@ void setup() {
 
   src = createGraphics(width, height, P3D);
   initGlow();
-  font = createFont("TickingTimebombBB.ttf", 24);
+  font = createFont("fonts/TickingTimebombBB.ttf", 24);
   rec = new GlowRect();
 
   oscP5 = new OscP5(this, 2204);
-  // remoteLocation = new NetAddress("127.0.0.1", 12000);
+  remoteLocation = new NetAddress("127.0.0.1", 2205);
+
+  dataPointsInit();
+  initOctahedron();
+  initParticles();
 }
 
 void draw() {
@@ -43,17 +47,23 @@ void draw() {
 
   if (mode == 0) {
     rec.draw(src);
+    dataPoints(src);
   } else if (mode == 1) {
     randomHorizontalLines(src);
-    if (triggerCount-- < 1) {
-      mode = 0;
-    }
   } else if (mode == 2) {
     randomVerticalLines(src);
-    if (triggerCount-- < 1) {
-      mode = 0;
-    }
+  } else if (mode == 3) {
+    randomDots(src);
+  } else if (mode == 4) {
+    src.background(0);
+    // drawLines(src);
+    drawOctahedron(src);
+    drawParticles(src);
+  } else if (mode == 5) {
+    src.background(0);
+    drawParticles(src);
   }
+
 
   src.endDraw();
   PGraphics graphics = glowManager.dowGlow(src);
@@ -64,7 +74,6 @@ void draw() {
   }
 }
 
-
 void initGlow() {
   glowManager = new GlowManager();
   glowManager.initGlow(this, src, 0.25f);
@@ -74,6 +83,12 @@ void initGlow() {
 }
 
 void keyPressed() {
+  if (key == ' ') {
+    OscMessage msg = new OscMessage("/connect");
+    msg.add(1);
+    oscP5.send(msg, remoteLocation);
+  }
+
   if (key == '1') {
     colorReverse = !colorReverse;
   }
@@ -88,18 +103,66 @@ void keyPressed() {
     mode = 2;
     triggerCount = 10;
   }
+  if (key == '5') {
+    mode = 3;
+    triggerCount = 10;
+  }
+  if (key == '6') {
+    mode = 4;
+    triggerCount = 10;
+  }
 }
 
-void oscEvent(OscMessage theOscMessage) {
-  /* print the address pattern and the typetag of the received OscMessage */
+void oscEvent(OscMessage msg) {
   // print("### received an osc message.");
-  // print(" addrpattern: "+theOscMessage.addrPattern());
+  // print(" addrpattern: " + theOscMessage.addrPattern());
   // println(" typetag: "+theOscMessage.typetag());
 
-  if(theOscMessage.checkAddrPattern("/test")) {
-    if(theOscMessage.checkTypetag("f")) {
-      float value = theOscMessage.get(0).floatValue();
+  if (msg.checkAddrPattern("/bass")) {
+    if (msg.checkTypetag("f")) {
+      float value = msg.get(0).floatValue();
       rec.alpha = map(value, 0, 1, 150, 255);
+    }
+  } else if (msg.checkAddrPattern("/tick")) {
+    if (msg.checkTypetag("i")) {
+      if (mode == 4) {
+        updateShowingParticles();
+      }
+
+      int b = msg.get(0).intValue();
+      if (b > 96 && b < 128) {
+        dataHold = true;
+        updateDataX();
+      } else {
+        dataHold = false;
+        updateDataY();
+      }
+    }
+  } else if (msg.checkAddrPattern("/ns")) {
+    if (msg.checkTypetag("i")) {
+      int value = msg.get(0).intValue();
+      if (value == 1) {
+        mode = floor(random(1, 6));
+      } else {
+        mode = 0;
+      }
+    }
+  } else if (msg.checkAddrPattern("/arp")) {
+    if (msg.checkTypetag("i")) {
+      int value = msg.get(0).intValue();
+      if (value == 1) {
+        rec.noise = true;
+        rec.updateNoisePos();
+      } else if (value == 0) {
+        rec.noise = false;
+      }
+    }
+  } else if (msg.checkAddrPattern("/octa")) {
+    if (msg.checkTypetag("i")) {
+      int value = msg.get(0).intValue();
+      if (value == 1) {
+        mode = 4;
+      }
     }
   }
 }

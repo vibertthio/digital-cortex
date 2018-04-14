@@ -7,6 +7,9 @@ class GlowRect {
 
   float alpha = 255;
 
+  boolean noise = false;
+  float noisePos;
+
   GlowRect() {
     renderW = rectWidth;
     renderH = rectWidth;
@@ -29,6 +32,7 @@ class GlowRect {
 
   void render(PGraphics src) {
     // src.beginDraw();
+    src.pushMatrix();
     if (colorReverse) {
       src.background(255);
     } else {
@@ -46,7 +50,21 @@ class GlowRect {
     }
 
     src.rect(0, 0, renderW, renderH);
+    if (noise) {
+      src.translate(noisePos, dataUnit);
+      src.fill(0);
+      // src.rect(0, 0, dataUnit, dataUnit);
+      src.rect(0, 0, dataUnit, dataUnit * 0.2);
+    }
     // src.endDraw();
+    src.popMatrix();
+  }
+
+  void updateNoisePos() {
+    if (random(1) > 0.5) {
+      float range = rectWidth * 0.05;
+      noisePos = random(-range, range);
+    }
   }
 
 }
@@ -56,9 +74,9 @@ void drawText() {
   if (rand > 0.95) {
     boxStr += newWord();
   } else if (rand > 0.9) {
-    boxStr = "" + newWord();
+    boxStr = "-$" + newWord();
   } else if (rand > 0.88) {
-    boxStr = "";
+    boxStr = "-$";
   }
 
   translate(width / 2, height / 2);
@@ -75,8 +93,4 @@ void drawText() {
 
 char newWord() {
   return char(int(random(33, 127)));
-}
-
-class GlowRects {
-
 }
