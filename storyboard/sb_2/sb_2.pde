@@ -56,11 +56,11 @@ void draw() {
     randomDots(src);
   } else if (mode == 4) {
     src.background(0);
-    // drawLines(src);
-    drawOctahedron(src);
-    drawParticles(src);
+    drawLines(src);
+
   } else if (mode == 5) {
     src.background(0);
+    drawOctahedron(src);
     drawParticles(src);
   }
 
@@ -111,6 +111,10 @@ void keyPressed() {
     mode = 4;
     triggerCount = 10;
   }
+  if (key == '7') {
+    mode = 5;
+    triggerCount = 10;
+  }
 }
 
 void oscEvent(OscMessage msg) {
@@ -125,7 +129,9 @@ void oscEvent(OscMessage msg) {
     }
   } else if (msg.checkAddrPattern("/tick")) {
     if (msg.checkTypetag("i")) {
-      if (mode == 4) {
+      updateText();
+
+      if (mode == 5) {
         updateShowingParticles();
       }
 
@@ -142,7 +148,7 @@ void oscEvent(OscMessage msg) {
     if (msg.checkTypetag("i")) {
       int value = msg.get(0).intValue();
       if (value == 1) {
-        mode = floor(random(1, 6));
+        mode = floor(random(1, 5));
       } else {
         mode = 0;
       }
@@ -161,7 +167,7 @@ void oscEvent(OscMessage msg) {
     if (msg.checkTypetag("i")) {
       int value = msg.get(0).intValue();
       if (value == 1) {
-        mode = 4;
+        mode = 5;
       }
     }
   }

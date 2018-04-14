@@ -70,15 +70,6 @@ class GlowRect {
 }
 
 void drawText() {
-  float rand = random(1);
-  if (rand > 0.95) {
-    boxStr += newWord();
-  } else if (rand > 0.9) {
-    boxStr = "-$" + newWord();
-  } else if (rand > 0.88) {
-    boxStr = "-$";
-  }
-
   translate(width / 2, height / 2);
   textFont(font);
   textSize(16);
@@ -91,6 +82,19 @@ void drawText() {
   text(boxStr, 0, 0);
 }
 
+void updateText() {
+  float rand = random(1);
+  if (rand > 0.5) {
+    boxStr += newWord();
+  } else if (rand > 0.2) {
+    // boxStr = "-$" + newWord();
+    if (boxStr.length() > 2) {
+      boxStr = boxStr.substring(0, boxStr.length() - 1);
+    }
+  } else if (rand > 0.1) {
+    boxStr = "-$";
+  }
+}
 char newWord() {
   return char(int(random(33, 127)));
 }

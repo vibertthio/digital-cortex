@@ -5,7 +5,7 @@ boolean showParticles = true;
 void initParticles() {
   particlesShader = loadShader("particles/frag.glsl", "particles/vert.glsl");
   particles = createParticles(5000);
-  lines = createLines(5000);
+  lines = createLines(1000);
 }
 void drawParticles(PGraphics src) {
   if (showParticles) {
@@ -42,7 +42,7 @@ PShape createParticles(int nOfP) {
   s = createShape();
   s.beginShape(TRIANGLES);
 
-  float r = 300;
+  float r = height * 0.3;
   float smooth = 0.8;
   for (int i = 0; i < nOfP; i++) {
     int j = 4 * i;
@@ -92,13 +92,14 @@ PShape createLines(int nOfL) {
   float smooth = 0.8;
   s = createShape();
   s.beginShape(QUADS);
+  float range = 0.9 * height;
 
   for (int i = 0; i < nOfL; i++) {
-    float xpos = random(-width * 0.5, height * 0.5);
-    float ypos = random(-width * 0.5, height * 0.5);
-    float zpos = random(-width * 0.5, height * 0.5);
+    float xpos1 = random(-range, range);
+    float ypos1 = random(-range, range);
+    float zpos1 = random(-range, range);
 
-    float ns = noise(xpos * smooth + ypos * smooth + zpos * smooth, frameCount * smooth * 0.5);
+    float ns = noise(xpos1 * smooth + ypos1 * smooth + zpos1 * smooth, frameCount * smooth * 0.5);
     ns *= ns;
     float sz = 0.1;
     s.noStroke();
@@ -108,15 +109,30 @@ PShape createLines(int nOfL) {
     // s.attribPosition("col", random(0.7), random(1), random(0.1));
     s.attribPosition("col", alpha, alpha, alpha);
     s.attrib("noise", ns);
-    s.vertex(xpos, ypos, zpos);
-    s.vertex(xpos + sz, ypos + sz, zpos + sz);
+    s.vertex(xpos1, ypos1, zpos1);
+    s.vertex(xpos1 + sz, ypos1, zpos1);
 
-    xpos = random(-width * 0.5, height * 0.5);
-    ypos = random(-width * 0.5, height * 0.5);
-    zpos = random(-width * 0.5, height * 0.5);
+    float xpos2 = random(-range, range);
+    float ypos2 = random(-range, range);
+    float zpos2 = random(-range, range);
 
-    s.vertex(xpos, ypos, zpos);
-    s.vertex(xpos + sz, ypos + sz, zpos + sz);
+    s.vertex(xpos2, ypos2, zpos2);
+    s.vertex(xpos2 + sz, ypos2, zpos2);
+
+    // 2nd
+    s.vertex(xpos1, ypos1, zpos1);
+    s.vertex(xpos1, ypos1 + sz, zpos1);
+
+    s.vertex(xpos2, ypos2, zpos2);
+    s.vertex(xpos2, ypos2 + sz, zpos2);
+
+    // 3rd
+    s.vertex(xpos1 + sz, ypos1, zpos1);
+    s.vertex(xpos1, ypos1 + sz, zpos1);
+
+    s.vertex(xpos2 + sz, ypos2, zpos2);
+    s.vertex(xpos2, ypos2 + sz, zpos2);
+
   }
 
   s.endShape();
@@ -130,7 +146,8 @@ void drawLines(PGraphics src) {
   src.translate(width * 0.5, height * 0.5);
   // src.ambientLight(0, 0, 0);
   src.rotateY(octaAlpha);
-  octaAlpha = random(0, 2 * PI);
+  // octaAlpha = random(0, 2 * PI);
+  octaAlpha += 0.05;
   src.shape(lines);
   src.resetShader();
   src.popMatrix();
