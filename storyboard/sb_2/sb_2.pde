@@ -10,6 +10,11 @@ float unit;
 float rectWidth;
 
 int mode = 0;
+int pdControlPhase = 0;
+int[][] noiseChoice = {
+  { 1, 2, 3 },
+  { 6, 7, 8, 9 },
+};
 int triggerCount = 0;
 boolean colorReverse = false;
 
@@ -74,15 +79,15 @@ void draw() {
   } else if (mode == 9) {
     src.background(0);
     drawLines(src, 3);
-    drawOctahedron(src);
+    // drawOctahedron(src);
 
   } else if (mode == 10) {
     src.background(0);
-    drawOctahedron(src);
+    // drawOctahedron(src);
     drawLines(src, 2);
   }
 
-
+  blink(src);
   src.endDraw();
   PGraphics graphics = glowManager.dowGlow(src);
   image(graphics, 0, 0);
@@ -150,12 +155,17 @@ void keyPressed() {
     mode = 10;
   }
 
+  if (key == 'a') {
+    rec.startFadeIn();
+  }
+
 }
 
+boolean dongStarted = false;
 void oscEvent(OscMessage msg) {
   // print("### received an osc message.");
-  // print(" addrpattern: " + theOscMessage.addrPattern());
-  // println(" typetag: "+theOscMessage.typetag());
+  // print(" addrpattern: " + msg.addrPattern());
+  // println(" typetag: "+ msg.typetag());
 
   if (msg.checkAddrPattern("/bass")) {
     if (msg.checkTypetag("f")) {
@@ -168,6 +178,10 @@ void oscEvent(OscMessage msg) {
 
       if (mode == 5) {
         updateShowingParticles();
+      }
+
+      if (pdControlPhase == 2) {
+        rec.fill = !rec.fill;
       }
 
       int b = msg.get(0).intValue();
@@ -183,9 +197,17 @@ void oscEvent(OscMessage msg) {
     if (msg.checkTypetag("i")) {
       int value = msg.get(0).intValue();
       if (value == 1) {
-        mode = floor(random(1, 5));
-      } else {
-        mode = 0;
+        if (pdControlPhase == 4) {
+          mode = 4;
+        } else {
+          mode = noiseChoice[0][int(random(3))];
+        }
+      } else if (value == 0) {
+        if (pdControlPhase == 3) {
+          mode = 0;
+        } else if (pdControlPhase == 4) {
+          mode = 5;
+        }
       }
     }
   } else if (msg.checkAddrPattern("/arp")) {
@@ -203,13 +225,58 @@ void oscEvent(OscMessage msg) {
       int value = msg.get(0).intValue();
       if (value == 1) {
         mode = 5;
+        // mode = 7;
       }
     }
-  } else if (msg.checkAddrPattern("/bb")) {
+  } else if (msg.checkAddrPattern("/phase")) {
     if (msg.checkTypetag("i")) {
       int value = msg.get(0).intValue();
       if (value == 1) {
-        mode = floor(random(1, 5));
+        rec.startFadeIn();
+        pdControlPhase = 1;
+      } else if (value == 2) {
+        pdControlPhase = 2;
+      } else if (value == 3) {
+        rec.fill = true;
+        rec.showingDataPoints = true;
+        pdControlPhase = 3;
+      } else if (value == 4) {
+        // mode = 7;
+        mode = 1;
+        pdControlPhase = 4;
+      } else if (value == 5) {
+        pdControlPhase = 5;
+        mode = 7;
+      } else if (value == 6) {
+        pdControlPhase = 6;
+        mode = 0;
+        rec.showingDataPoints = false;
+        rec.startFadeIn(4000);
+        updateText("-$vibert thio");
+      }
+    }
+  } else if (msg.checkAddrPattern("/dong")) {
+    if (msg.checkTypetag("i")) {
+      int value = msg.get(0).intValue();
+      if (value == 1) {
+        dongStarted = true;
+        mode++;
+        if (mode > 9) {
+          mode = 6;
+        }
+        // mode = noiseChoice[1][int(random(4))];
+      }
+    }
+  } else if (msg.checkAddrPattern("/stutter")) {
+    println("in");
+    if (msg.checkTypetag("i")) {
+      int value = msg.get(0).intValue();
+      if (value == 1) {
+        if (!dongStarted) {
+          blinkCount = 2;
+        } else if (random(1) > 0.8) {
+          blinkCount = 1;
+        }
       }
     }
   }

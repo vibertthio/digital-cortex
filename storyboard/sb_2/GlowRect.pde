@@ -6,14 +6,20 @@ class GlowRect {
   float targetH;
 
   float alpha = 0;
+  TimeLine startTimer;
+  float pow = 8;
 
+  boolean fill = false;
   boolean showingDataPoints = false;
   boolean noise = false;
   float noisePos;
 
+
   GlowRect() {
     renderW = rectWidth;
     renderH = rectWidth;
+
+    startTimer = new TimeLine(10000);
   }
 
   PGraphics drawGlow(PGraphics src) {
@@ -28,11 +34,10 @@ class GlowRect {
   }
 
   void update() {
-
+    updateFadeIn();
   }
 
   void render(PGraphics src) {
-    // src.beginDraw();
     src.pushMatrix();
     if (colorReverse) {
       src.background(255);
@@ -43,21 +48,31 @@ class GlowRect {
     src.translate(width / 2, height / 2);
     // src.rotateX(frameCount * 0.005f);
     src.rectMode(CENTER);
-    src.noStroke();
-    if (colorReverse) {
-      src.fill(255 - alpha);
+
+    if (fill) {
+      src.noStroke();
+      if (colorReverse) {
+        src.fill(255 - alpha);
+      } else {
+        src.fill(alpha);
+      }
+
+      src.rect(0, 0, renderW, renderH);
+
     } else {
+      src.noStroke();
       src.fill(alpha);
+      src.rect(0, 0, renderW, renderH);
+      src.fill(0);
+      src.rect(0, 0, renderW * 0.98, renderH * 0.98);
     }
 
-    src.rect(0, 0, renderW, renderH);
     if (noise) {
       src.translate(noisePos, dataUnit);
       src.fill(0);
       // src.rect(0, 0, dataUnit, dataUnit);
       src.rect(0, 0, dataUnit, dataUnit * 0.2);
     }
-    // src.endDraw();
     src.popMatrix();
 
     if (showingDataPoints) {
@@ -75,10 +90,18 @@ class GlowRect {
 
   // utilities
   void startFadeIn() {
-
+    pow = 8;
+    startTimer.startTimer();
+  }
+  void startFadeIn(int ll) {
+    pow = 0.8;
+    startTimer.limit = ll;
+    startTimer.startTimer();
   }
   void updateFadeIn() {
-    
+    if (startTimer.state) {
+      alpha = startTimer.getPowIn(pow) * 255;
+    }
   }
 }
 
@@ -147,6 +170,9 @@ void updateText() {
   } else if (rand > 0.1) {
     boxStr = "-$";
   }
+}
+void updateText(String s) {
+  boxStr = s;
 }
 char newWord() {
   return char(int(random(33, 127)));
