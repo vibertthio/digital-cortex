@@ -17,11 +17,11 @@ float rand(vec2 co){
 }
 
 void main() {
-  float factor = sin(noise * 10.0 + uTime * 2.0);
-  vec3 updatePos = position.xyz * (1.0 + 0.03 * factor * factor);
+  // float factor = sin(noise * 10.0 + uTime * 2.0);
+  // vec3 updatePos = position.xyz * (1.0 + 0.03 * factor * factor);
 
-  // float t = sin(noise * 10.0 + uTime * 0.5);
-  // vec3 updatePos = position.xyz * t * t + positionNew.xyz * (1.0 - t * t);
+  float t = sin(noise * 10.0 + uTime * 0.5);
+  vec3 updatePos = position.xyz * t * t + positionNew.xyz * (1.0 - t * t);
   gl_Position = transform * vec4(updatePos, position.w);
   // gl_Position = transform * position;
 
