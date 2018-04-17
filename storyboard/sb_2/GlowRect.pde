@@ -5,8 +5,9 @@ class GlowRect {
   float targetW;
   float targetH;
 
-  float alpha = 255;
+  float alpha = 0;
 
+  boolean showingDataPoints = false;
   boolean noise = false;
   float noisePos;
 
@@ -58,6 +59,11 @@ class GlowRect {
     }
     // src.endDraw();
     src.popMatrix();
+
+    if (showingDataPoints) {
+      dataPoints(src);
+    }
+
   }
 
   void updateNoisePos() {
@@ -67,6 +73,54 @@ class GlowRect {
     }
   }
 
+  // utilities
+  void startFadeIn() {
+
+  }
+  void updateFadeIn() {
+    
+  }
+}
+
+float dataX = 0;
+float dataY = 0;
+float dataUnit;
+float dataGap;
+boolean dataHold = false;
+
+void initDataPoints() {
+   dataUnit = rectWidth * 0.05;
+   dataGap = rectWidth * 0.025;
+   dataX = dataUnit;
+}
+void dataPoints(PGraphics src) {
+
+  src.pushMatrix();
+  src.noStroke();
+  src.fill(255);
+  src.translate(width * 0.5 + rectWidth * 0.5 + dataGap, height * 0.5 - rectWidth * 0.5);
+  src.rectMode(CORNER);
+
+  if (!dataHold) {
+    // updateDataY();
+    src.rect(0, dataY, dataUnit, dataUnit);
+  } else {
+    src.rect(0, dataY, dataX, dataUnit);
+  }
+  src.popMatrix();
+}
+void updateDataY() {
+  dataY += dataUnit;
+  dataX = dataUnit;
+  if (dataY + dataUnit >= rectWidth) {
+    dataY = 0;
+  }
+}
+void updateDataX() {
+  dataX += dataUnit;
+  if (random(1) > 0.7) {
+    dataX = dataUnit;
+  }
 }
 
 void drawText() {
@@ -81,7 +135,6 @@ void drawText() {
   }
   text(boxStr, 0, 0);
 }
-
 void updateText() {
   float rand = random(1);
   if (rand > 0.5) {

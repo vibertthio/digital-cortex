@@ -177,7 +177,7 @@ float wave = 4.0;
 
 void main() {
   float now = exponentialOut(max((uTime - delayAll - delay - (faceNormal.x + 1.0) / 2.0 - (faceNormal.y + 1.0) / 2.0) / duration, 0.0));
-  mat4 translateMat = computeTranslateMat(vec3(faceNormal) * 1200.0 * (1.0 - now) + vec3(0.0, sin(uTime) * 30.0, 0.0));
+  mat4 translateMat = computeTranslateMat(vec3(faceNormal) * 1200.0 * (1.0 - now) + vec3(0.0, sin(uTime) * 10.0, 0.0));
   mat4 rotateMat = computeRotateMat(0.0, radians((1.0 - now) * faceNormal.y * 1000.0), 0.0);
   float rotateRadian = radians((uTime + faceNormal.x + faceNormal.y) * 1440.0);
   mat4 rotateMatSelf = computeRotateMat(rotateRadian, rotateRadian, 0.0);

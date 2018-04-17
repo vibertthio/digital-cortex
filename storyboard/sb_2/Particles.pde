@@ -5,9 +5,6 @@ boolean showParticles = true;
 void initParticles() {
   particlesShader = loadShader("particles/frag.glsl", "particles/vert.glsl");
   particles = createParticles(5000);
-  // lines = createLines(1000);
-  lines = createLines2(2000);
-  linesShader = loadShader("lines/frag.glsl", "lines/vert.glsl");
 }
 void drawParticles(PGraphics src) {
   if (showParticles) {
@@ -88,14 +85,22 @@ void updateParticlesShader() {
   particlesShader.set("uTime", millis() / 1000.0);
 }
 
-PShape lines;
+PShape[] lines;
 PShader linesShader;
+void initLines() {
+  lines = new PShape[4];
+  lines[0] = createLines(1000);
+  lines[1] = createLines1(1000);
+  lines[2] = createLines2(1000);
+  lines[3] = createLines3(2000);
+  linesShader = loadShader("lines/frag.glsl", "lines/vert.glsl");
+}
 PShape createLines(int nOfL) {
   PShape s;
   float smooth = 0.8;
   s = createShape();
   s.beginShape(QUADS);
-  float range = 0.9 * height;
+  float range = 1.2 * height;
 
   for (int i = 0; i < nOfL; i++) {
     // float xpos1 = 0;
@@ -181,7 +186,7 @@ PShape createLines(int nOfL) {
   s.endShape();
   return s;
 }
-PShape createLines2(int nOfL) {
+PShape createLines1(int nOfL) {
   PShape s;
   float smooth = 0.8;
   s = createShape();
@@ -265,7 +270,7 @@ PShape createLines2(int nOfL) {
   s.endShape();
   return s;
 }
-PShape createLines3(int nOfL) {
+PShape createLines2(int nOfL) {
   PShape s;
   float smooth = 0.8;
   s = createShape();
@@ -274,7 +279,7 @@ PShape createLines3(int nOfL) {
 
   for (int i = 0; i < nOfL; i++) {
     float r = height * 0.3;
-    float dist = 0.4;
+    float dist = 0.2;
     float theta = random(1) * PI * 2;
     float zpos = random(1) * 2 - 1;
     float rsin = sqrt(1 - zpos * zpos);
@@ -360,76 +365,33 @@ PShape createLines3(int nOfL) {
   s.endShape();
   return s;
 }
-PShape createLines4(int nOfL) {
+PShape createLines3(int nOfL) {
   PShape s;
   float smooth = 0.8;
   s = createShape();
   s.beginShape(QUADS);
   float range = 0.9 * height;
-  float r = height * 0.3;
+  float r = height * 0.05;
+  float dist = 0.3;
 
-  float centerX = r * 0.1;
-  float centerY = r * -0.2;
-  float centerZ = r * 0.3;
-
-  float centerX2 = r * -0.1;
-  float centerY2 = r * 0.5;
-  float centerZ2 = r * 0.1;
   for (int i = 0; i < nOfL; i++) {
 
-    float dist = 0.4;
-    float theta = random(1) * PI * 2;
-    float zpos = random(1) * 2 - 1;
-    float rsin = sqrt(1 - zpos * zpos);
-    float xpos = rsin * cos(theta);
-    float ypos = rsin * sin(theta);
-    xpos *= r;
-    ypos *= r;
-    zpos *= r;
+    float xpos1 = random(-width, width);
+    float ypos1 = -range;
+    float zpos1 = 0;
 
-    float xpos1;
-    float ypos1;
-    float zpos1;
+    float xpos2 = xpos1;
+    float ypos2 = range;
+    float zpos2 = 0;
 
-    float xpos3;
-    float ypos3;
-    float zpos3;
-    if (random(1) > 0.5) {
-      xpos1 = centerX;
-      ypos1 = centerY;
-      zpos1 = centerZ;
-
-      xpos3 = centerX;
-      ypos3 = centerY;
-      zpos3 = centerZ;
-    } else {
-      xpos1 = centerX2;
-      ypos1 = centerY2;
-      zpos1 = centerZ2;
-
-      xpos3 = centerX2;
-      ypos3 = centerY2;
-      zpos3 = centerZ2;
-    }
-
-
-    theta = random(1) * PI * 2;
-    zpos = random(1) * 2 - 1;
-    rsin = sqrt(1 - zpos * zpos);
-    xpos = rsin * cos(theta);
-    ypos = rsin * sin(theta);
-    xpos *= r;
-    ypos *= r;
-    zpos *= r;
-
-    float xpos2 = xpos;
-    float ypos2 = ypos;
-    float zpos2 = zpos;
+    float xpos3 = xpos1 + random(-r * dist, r * dist);
+    float ypos3 = ypos1 + random(-r * dist, r * dist);
+    float zpos3 = zpos1 + random(-r * dist, r * dist);
     // float zpos3 = random(-range, range);
 
-    float xpos4 = xpos + random(-r * dist, r * dist);
-    float ypos4 = ypos + random(-r * dist, r * dist);
-    float zpos4 = zpos + random(-r * dist, r * dist);
+    float xpos4 = xpos2 + random(-r * dist, r * dist);
+    float ypos4 = ypos2 + random(-r * dist, r * dist);
+    float zpos4 = zpos2 + random(-r * dist, r * dist);
     // float zpos4 = random(-range, range);
 
     float ns = noise(xpos2 * smooth + ypos2 * smooth + zpos2 * smooth, frameCount * smooth * 0.5);
@@ -478,6 +440,7 @@ PShape createLines4(int nOfL) {
   s.endShape();
   return s;
 }
+
 void drawLines(PGraphics src) {
   updateLinesShader();
   src.pushMatrix();
@@ -489,10 +452,33 @@ void drawLines(PGraphics src) {
   // src.rotateY(octaAlpha);
   // octaAlpha = random(0, 2 * PI);
   octaAlpha += 0.005;
-  src.shape(lines);
+  src.shape(lines[2]);
+  src.resetShader();
+  src.popMatrix();
+}
+void drawLines(PGraphics src, int index) {
+  if (index == 2) {
+    updateLinesShader(10);
+  } else {
+    updateLinesShader();
+  }
+  src.pushMatrix();
+  src.shader(linesShader);
+  src.translate(width * 0.5, height * 0.5);
+
+  if (index == 2) {
+    // octaAlpha = random(0, 2 * PI);
+    octaAlpha += 0.005;
+    src.rotateY(octaAlpha);
+    // src.rotateZ(octaAlpha);
+  }
+  src.shape(lines[index]);
   src.resetShader();
   src.popMatrix();
 }
 void updateLinesShader() {
   linesShader.set("uTime", millis() / 1000.0);
+}
+void updateLinesShader(float amt) {
+  linesShader.set("uTime", (millis() / 1000.0) * amt);
 }

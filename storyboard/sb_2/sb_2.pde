@@ -21,9 +21,9 @@ NetAddress remoteLocation;
 
 
 void setup() {
-  size(960, 540, OPENGL);
+  // size(960, 540, OPENGL);
   // size(1920, 1080, OPENGL);
-  // fullScreen(OPENGL);
+  fullScreen(OPENGL);
   smooth(8);
   unit = height / 9;
   rectWidth = unit * 3;
@@ -36,9 +36,10 @@ void setup() {
   oscP5 = new OscP5(this, 2204);
   remoteLocation = new NetAddress("127.0.0.1", 2205);
 
-  dataPointsInit();
+  initDataPoints();
   initOctahedron();
   initParticles();
+  initLines();
 }
 
 void draw() {
@@ -47,7 +48,6 @@ void draw() {
 
   if (mode == 0) {
     rec.draw(src);
-    dataPoints(src);
   } else if (mode == 1) {
     randomHorizontalLines(src);
   } else if (mode == 2) {
@@ -57,11 +57,29 @@ void draw() {
   } else if (mode == 4) {
     src.background(0);
     drawLines(src);
-
   } else if (mode == 5) {
     src.background(0);
+    // drawLines(src);
     drawOctahedron(src);
     drawParticles(src);
+  } else if (mode == 6) {
+    src.background(0);
+    drawLines(src, 0);
+  } else if (mode == 7) {
+    src.background(0);
+    drawLines(src, 1);
+  } else if (mode == 8) {
+    src.background(0);
+    drawLines(src, 2);
+  } else if (mode == 9) {
+    src.background(0);
+    drawLines(src, 3);
+    drawOctahedron(src);
+
+  } else if (mode == 10) {
+    src.background(0);
+    drawOctahedron(src);
+    drawLines(src, 2);
   }
 
 
@@ -115,6 +133,23 @@ void keyPressed() {
     mode = 5;
     triggerCount = 10;
   }
+
+  if (key == 'q') {
+    mode = 6;
+  }
+  if (key == 'w') {
+    mode = 7;
+  }
+  if (key == 'e') {
+    mode = 8;
+  }
+  if (key == 'r') {
+    mode = 9;
+  }
+  if (key == 't') {
+    mode = 10;
+  }
+
 }
 
 void oscEvent(OscMessage msg) {
@@ -168,6 +203,13 @@ void oscEvent(OscMessage msg) {
       int value = msg.get(0).intValue();
       if (value == 1) {
         mode = 5;
+      }
+    }
+  } else if (msg.checkAddrPattern("/bb")) {
+    if (msg.checkTypetag("i")) {
+      int value = msg.get(0).intValue();
+      if (value == 1) {
+        mode = floor(random(1, 5));
       }
     }
   }
