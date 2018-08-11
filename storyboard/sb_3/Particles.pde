@@ -42,7 +42,7 @@ PShape createParticles(int nOfP) {
   s.beginShape(TRIANGLES);
 
   float r = height * 0.3;
-  float smooth = 0.8;
+  float smooth = 0.2;
   for (int i = 0; i < nOfP; i++) {
     int j = 4 * i;
     float theta = random(1) * PI * 2;
