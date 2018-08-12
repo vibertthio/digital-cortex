@@ -9,7 +9,7 @@ PFont font;
 float unit;
 float rectWidth;
 
-int mode = 11;
+int mode = 5;
 int pdControlPhase = 0;
 int[][] noiseChoice = {
   { 1, 2, 3 },

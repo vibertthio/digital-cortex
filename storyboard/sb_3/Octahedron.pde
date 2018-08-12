@@ -4,6 +4,7 @@ float octaAlpha;
 void initOctahedron() {
   octaShader = loadShader("octahedron/frag.glsl", "octahedron/vert.glsl");
   octa = createOctahedron(height * 0.2, 4);
+  // octa = createOctahedron(height * 0.1, 4);
   octaAlpha = 0;
 }
 void drawOctahedron(PGraphics src) {
