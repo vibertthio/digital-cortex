@@ -9,7 +9,7 @@ PFont font;
 float unit;
 float rectWidth;
 
-int mode = 5;
+int mode = 11;
 int pdControlPhase = 0;
 int[][] noiseChoice = {
   { 1, 2, 3 },
@@ -68,8 +68,12 @@ void draw() {
     src.background(0);
     // drawLines(src);
     drawOctahedron(src);
-    drawParticles(src);
-    drawIndexLines(src);
+    // drawParticles(src);
+    drawIndexLines2(src, "vertical", -300, -200, 0, PI);
+    drawIndexLines2(src, "shinyi", -150, 150, 100, 0.5 * PI);
+    drawIndexLines2(src, "vibert", 250, 100, -10, 0.1 * PI);
+
+    // drawPlain(src);
   } else if (mode == 6) {
     src.background(0);
     drawLines(src, 0);
@@ -88,6 +92,9 @@ void draw() {
     src.background(0);
     // drawOctahedron(src);
     drawLines(src, 2);
+  } else if (mode == 11) {
+    src.background(0);
+    drawGrid(src);
   }
 
   blink(src);
@@ -159,7 +166,8 @@ void keyPressed() {
   }
 
   if (key == 'a') {
-    rec.startFadeIn();
+    // rec.startFadeIn();
+
   }
 
 }

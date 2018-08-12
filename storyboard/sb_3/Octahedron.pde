@@ -194,3 +194,111 @@ void drawIndexLines(PGraphics src) {
   src.popMatrix();
 
 }
+void drawIndexLines1(PGraphics src) {
+  float rate = 0.01;
+  float radius = 100;
+  src.pushMatrix();
+  src.translate(width * 0.5, height * 0.5);
+  src.stroke(255);
+  // src.rotateY(frameCount * rate);
+  // src.rotateZ(frameCount * rate);
+  float x = -300 + 10 * cos(frameCount * rate);
+  float y = -200 + 50 * sin(frameCount * rate);
+  float z = 0;
+  // float z = 10 * sin(frameCount * rate);
+  // float z = 0;
+
+
+  src.line(0, 0, 0, x, y, z);
+  src.translate(x, y, z);
+
+  src.line(0, 0, 0, -50, 0, 0);
+  src.translate(-53, 0, 0);
+
+  // src.noStroke();
+  // src.fill(255);
+  // src.rect(10, 0, 20, 20);
+
+  src.textFont(font);
+  src.textSize(10);
+  src.textAlign(RIGHT, CENTER);
+  // src.textAlign(CENTER, CENTER);
+  src.fill(255);
+  src.text("vertical", 0, 0);
+
+  src.popMatrix();
+
+}
+void drawIndexLines2(PGraphics src, String txt, float _x, float _y, float _z, float _phase) {
+  float rate = 0.01;
+  float radius = 100;
+  src.pushMatrix();
+  src.translate(width * 0.5, height * 0.5);
+  src.stroke(255);
+  // src.rotateY(frameCount * rate);
+  // src.rotateZ(frameCount * rate);
+  float x = _x + 10 * cos(frameCount * rate + _phase);
+  float y = _y + 50 * sin(frameCount * rate + _phase);
+  float z = _z;
+  // float z = 10 * sin(frameCount * rate);
+  // float z = 0;
+
+
+  src.line(0, 0, 0, x, y, z);
+  src.translate(x, y, z);
+
+  if (x < 0) {
+    src.line(0, 0, 0, -50, 0, 0);
+    src.translate(-53, 0, 0);
+    src.textAlign(RIGHT, CENTER);
+  } else {
+    src.line(0, 0, 0, 50, 0, 0);
+    src.translate(53, 0, 0);
+    src.textAlign(LEFT, CENTER);
+  }
+
+  // src.noStroke();
+  // src.fill(255);
+  // src.rect(10, 0, 20, 20);
+
+  src.textFont(font);
+  src.textSize(10);
+  // src.textAlign(RIGHT, CENTER);
+  // src.textAlign(CENTER, CENTER);
+  src.fill(255);
+  src.text(txt, 0, 0);
+
+  src.popMatrix();
+
+}
+
+void drawPlain(PGraphics src) {
+  src.pushMatrix();
+  src.translate(width * 0.5, height * 0.5, -500);
+  src.noStroke();
+  src.fill(255);
+  src.rectMode(CENTER);
+  src.translate(0, height * 0.3, 0);
+  src.rotateX(0.5 * PI);
+  src.rect(0, 0, 1000, 1000);
+
+  // src.rotateX(-0.5 * PI);
+  // src.translate(0, height * -0.6, 0);
+  // src.rotateX(0.5 * PI);
+  // src.rect(0, 0, 200, 200);
+  src.popMatrix();
+  src.pushMatrix();
+  src.translate(width * 0.5, height * 0.5, -1000);
+  src.noStroke();
+  src.fill(255);
+  src.rectMode(CENTER);
+  // src.translate(0, height * 0.3, 0);
+  // src.rotateX(0.5 * PI);
+  src.rect(0, 0, 1000, 1000);
+
+  // src.rotateX(-0.5 * PI);
+  // src.translate(0, height * -0.6, 0);
+  // src.rotateX(0.5 * PI);
+  // src.rect(0, 0, 200, 200);
+  src.popMatrix();
+}

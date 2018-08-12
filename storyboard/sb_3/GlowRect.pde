@@ -5,11 +5,13 @@ class GlowRect {
   float targetW;
   float targetH;
 
-  float alpha = 0;
+  // float alpha = 0;
+  float alpha = 255;
   TimeLine startTimer;
   float pow = 8;
 
-  boolean fill = false;
+  // boolean fill = false;
+  boolean fill = true;
   boolean showingDataPoints = false;
   boolean noise = false;
   float noisePos;
@@ -147,6 +149,7 @@ void updateDataX() {
 }
 
 void drawText() {
+  pushMatrix();
   translate(width / 2, height / 2);
   textFont(font);
   textSize(16);
@@ -157,6 +160,7 @@ void drawText() {
     fill(0);
   }
   text(boxStr, 0, 0);
+  popMatrix();
 }
 void updateText() {
   float rand = random(1);
