@@ -68,10 +68,12 @@ void draw() {
     src.background(0);
     // drawLines(src);
     drawOctahedron(src);
-    // drawParticles(src);
+    drawParticles(src);
     drawIndexLines2(src, "vertical", -300, -200, 0, PI);
     drawIndexLines2(src, "shinyi", -150, 150, 100, 0.5 * PI);
     drawIndexLines2(src, "vibert", 250, 100, -10, 0.1 * PI);
+
+    drawGrid(src);
 
     // drawPlain(src);
   } else if (mode == 6) {

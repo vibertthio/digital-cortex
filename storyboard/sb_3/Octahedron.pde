@@ -19,6 +19,19 @@ void drawOctahedron(PGraphics src) {
   src.resetShader();
   src.popMatrix();
 }
+void drawOctahedron(PGraphics src, float _x, float _y) {
+  updateOctaShader();
+  src.shader(octaShader);
+  src.pushMatrix();
+  // src.background(0);
+  src.translate(width * (0.5 + _x), height * (0.5 + _y));
+  // src.ambientLight(0, 0, 0);
+  src.rotateY(octaAlpha);
+  octaAlpha += 0.005;
+  src.shape(octa);
+  src.resetShader();
+  src.popMatrix();
+}
 void updateOctaShader() {
   octaShader.set("uTime", millis() / 1500.0);
 }
