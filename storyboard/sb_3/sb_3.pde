@@ -9,7 +9,7 @@ PFont font;
 float unit;
 float rectWidth;
 
-int mode = 5;
+int mode = 12;
 int pdControlPhase = 0;
 int[][] noiseChoice = {
   { 1, 2, 3 },
@@ -98,6 +98,17 @@ void draw() {
   } else if (mode == 11) {
     src.background(0);
     drawGrid(src);
+  } else if (mode == 12) {
+    src.background(0);
+
+    src.translate(width * 0.5, height * 0.5);
+    src.rotateY(frameCount * 0.02);
+
+    drawOctahedron(src, -0.7, -0.5, 0);
+    drawOctahedron(src, -0.3, -0.5, 0);
+
+    src.stroke(255, 0, 0);
+    src.line(width * -0.2, 0, width * 0.2, 0);
   }
 
   blink(src);

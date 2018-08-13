@@ -12,8 +12,8 @@ in float noise;
 
 out vec4 vertColor;
 
-const float duration = 0.5;
-const float delayAll = 0.5;
+const float duration = 0.01;
+const float delayAll = 50.0;
 const float smoothy = 0.1;
 const float wave = 10.0;
 const float size = 1.0;
@@ -149,7 +149,8 @@ float cnoise(vec3 P) {
 
 
 void main() {
-  float now = exponentialOut(max((uTime - delayAll - (position.x + 1.0) / 2.0 - (position.y + 1.0) / 2.0) / duration, 0.0));
+  // float now = exponentialOut(max((uTime - delayAll - (position.x + 1.0) / 2.0 - (position.y + 1.0) / 2.0) / duration, 0.0));
+  float now = exponentialOut(max((uTime - delayAll - (position.x) / 1.0) / duration, 0.0));
   float noise = smoothstep(-0.4, 0.4, cnoise(vec3(position.x * smoothy - uTime, position.y * smoothy - uTime, position.z * smoothy + uTime))) * wave;
 
   float factor = sin(noise * 10.0 + uTime * 2.0);
@@ -162,10 +163,11 @@ void main() {
 
 
 
-  mat4 rotateMat = computeRotateMat(0.0, radians((1.0 - now) * position.y * 1000.0), 0.0);
-  mat4 translateMat = computeTranslateMat(vec3(position) * 120.0 * (1.0 - now) + vec3(0.0, sin(uTime) * 10.0, 0.0));
+  mat4 rotateMat = computeRotateMat(0.0, radians((1.0 - now) * (position.y + position.x + position.z) * 10.0), 0.0);
+  mat4 translateMat = computeTranslateMat(vec3(position) * 5.0 * (1.0 - now) + vec3(0.0, sin(uTime) * 5.0, cos(uTime) * 1.0));
 
-  // vec4 updatePos = rotateMat * translateMat * vec4(updatePosSelf, 1.0);
+  // vec4 updatePos = translateMat * vec4(updatePosSelf, 1.0);
+  // vec4 updatePos = rotateMat * vec4(updatePosSelf, 1.0);
   vec4 updatePos = vec4(updatePosSelf, 1.0);
   gl_Position = transform * updatePos;
 

@@ -177,7 +177,8 @@ float smoothy = 0.005;
 // float wave = 4.0;
 // float smoothy = 0.01;
 float wave = 20.0;
-float size = 0.1;
+float size = 0.3;
+// float size = 0.1;
 
 void main() {
   float now = exponentialOut(max((uTime - delayAll - delay - (faceNormal.x + 1.0) / 2.0 - (faceNormal.y + 1.0) / 2.0) / duration, 0.0));
