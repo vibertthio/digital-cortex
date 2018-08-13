@@ -20,7 +20,8 @@ out float vNoise;
 out float vNow;
 
 const float duration = 0.5;
-const float delayAll = 2.0;
+// const float delayAll = 2.0;
+const float delayAll = 0.5;
 
 
 /*****

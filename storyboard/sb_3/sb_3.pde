@@ -68,6 +68,7 @@ void draw() {
     src.background(0);
     // drawLines(src);
     drawOctahedron(src);
+
     drawParticles(src);
     drawIndexLines2(src, "vertical", -300, -200, 0, PI);
     drawIndexLines2(src, "shinyi", -150, 150, 100, 0.5 * PI);
@@ -169,6 +170,7 @@ void keyPressed() {
 
   if (key == 'a') {
     // rec.startFadeIn();
+    resetOctaShader();
 
   }
 

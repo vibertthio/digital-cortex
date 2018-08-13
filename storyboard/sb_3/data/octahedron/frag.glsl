@@ -13,6 +13,7 @@ out vec4 fragColor;
 
 const vec3 lightDirection = vec3(2.0, -1.0, -1.0);
 const float duration = 2.0;
+// const float duration = 10.0;
 const float delayAll = 1.0;
 
 vec3 convertHsvToRgb(vec3 c) {
@@ -35,10 +36,14 @@ void main() {
   vec3 rgb = (1.0 - now) * vec3(1.0) + convertHsvToRgb(vec3(
     // 0.9 + (v.x + v.y + v.x) / 40.0 + uTime * 0.1,
     0.5 + (v.x + v.y + v.x) / 40.0 + uTime * 0.1,
+
     // 0.9,
     0.01,
-    0.4 + sin(uTime) * 0.05 + vNoise * 0.02)
+
+    // 0.4 + sin(uTime) * 0.05 + vNoise * 0.02)
+    0.5 + sin(uTime) * 0.05 + vNoise * 0.02)
   );
+  // vec3 rgb = (1.0 - now) * vec3(1.0) + convertHsvToRgb(vec3(0, 1, 1));
 
   fragColor =  vec4(rgb + diff, opacity);;
   // fragColor = vertColor;

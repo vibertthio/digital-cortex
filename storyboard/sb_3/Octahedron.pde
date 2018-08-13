@@ -1,6 +1,8 @@
 PShape octa;
 PShader octaShader;
 float octaAlpha;
+float octaTime = 0;
+
 void initOctahedron() {
   octaShader = loadShader("octahedron/frag.glsl", "octahedron/vert.glsl");
   octa = createOctahedron(height * 0.2, 4);
@@ -34,7 +36,11 @@ void drawOctahedron(PGraphics src, float _x, float _y) {
   src.popMatrix();
 }
 void updateOctaShader() {
-  octaShader.set("uTime", millis() / 1500.0);
+  octaShader.set("uTime", (millis() - octaTime) / 1500.0);
+  // octaShader.set("uTime", millis() / 1500.0);
+}
+void resetOctaShader() {
+  octaTime = millis();
 }
 PShape createOctahedron(float radius, int levels) {
   PVector points[];
