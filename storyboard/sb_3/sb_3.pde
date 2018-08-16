@@ -26,8 +26,8 @@ NetAddress remoteLocation;
 
 
 void setup() {
-  size(1080, 900, OPENGL);
-  // size(540, 450, OPENGL);
+  // size(1080, 900, OPENGL);
+  size(540, 450, OPENGL);
   // size(960, 540, OPENGL);
   // size(1920, 1080, OPENGL);
   // fullScreen(OPENGL);
