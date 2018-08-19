@@ -1,4 +1,4 @@
-#N canvas 354 211 1284 705 10;
+#N canvas 354 211 817 676 10;
 #X msg 31 28 \; pd dsp 0;
 #X obj 189 48 k_dac~;
 #X obj 189 23 catch~ master;
@@ -42,7 +42,7 @@
 #X obj 361 34 expr~ if($v1==0 \, 2 \, 3);
 #X obj 23 115 expr~ if($v1==31 \, 4 \, $v2);
 #X obj 340 457 spigot;
-#X obj 388 446 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 388 446 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 379 408 inlet;
 #X connect 0 0 5 0;
@@ -82,7 +82,7 @@
 #X connect 35 0 27 0;
 #X connect 36 0 35 1;
 #X connect 37 0 36 0;
-#X restore 91 221 pd osc;
+#X restore 97 221 pd osc;
 #N canvas 1038 218 818 422 ambient 0;
 #N canvas 160 79 810 370 noise-gen-1 0;
 #X obj 56 103 random 800;
@@ -320,7 +320,7 @@
 #X obj 480 129 s osc-sig;
 #X obj 314 33 change;
 #X obj 421 64 spigot;
-#X obj 428 33 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 428 33 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 385 8 inlet;
 #X connect 0 0 16 0;
@@ -459,10 +459,10 @@
 #X connect 43 0 31 0;
 #X connect 44 0 36 1;
 #X connect 45 0 36 0;
-#X restore 633 69 pd strong-bass;
-#X obj 633 48 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
--1;
-#X obj 633 116 throw~ master;
+#X restore 333 178 pd strong-bass;
+#X obj 333 157 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 333 225 throw~ master;
 #N canvas 1009 152 719 527 aliens-talk 0;
 #N canvas 443 67 1130 733 arp 0;
 #X obj 50 492 *~;
@@ -556,7 +556,7 @@
 #X connect 38 0 24 0;
 #X connect 39 0 21 0;
 #X restore 200 173 pd arp;
-#X obj 279 208 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 279 208 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 279 143 f;
 #X obj 294 119 random 128;
@@ -579,12 +579,12 @@
 #X msg 227 366 0 0.15 \, 1 0.4 \, 2 0.6 \, 3 0.2;
 #X obj 228 338 loadbang;
 #X obj 211 467 outlet~;
-#X obj 126 257 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 126 257 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 110 205 inlet;
 #X obj 210 264 *~;
 #X obj 542 221 inlet;
-#X obj 542 243 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 542 243 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 461 325 spigot;
 #X connect 0 0 9 0;
@@ -618,9 +618,9 @@
 #X connect 26 0 27 1;
 #X connect 27 0 13 0;
 #X restore 182 268 pd aliens-talk;
-#X obj 131 244 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 131 244 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
-#X obj 174 245 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 174 245 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #N canvas 448 78 582 496 osc-connection 0;
 #X obj 120 214 udpsend;
@@ -730,7 +730,7 @@
 -1;
 #X obj 33 433 line;
 #X floatatom 107 359 5 0 0 0 - - -, f 5;
-#X obj 633 94 *~ 0.5;
+#X obj 333 203 *~ 0.5;
 #X obj 340 15 key;
 #X floatatom 340 37 5 0 0 0 - - -, f 5;
 #N canvas 0 22 1005 610 ns-stutter 0;
@@ -819,13 +819,13 @@
 #X obj 341 131 throw~ master;
 #X obj 39 288 *~;
 #X obj 29 313 throw~ master;
-#X obj 109 289 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 109 289 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
-#X obj 882 128 throw~ master;
-#X obj 882 94 *~ 0.5;
-#X obj 882 42 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
--1;
-#X obj 633 242 throw~ master;
+#X obj 707 251 throw~ master;
+#X obj 707 217 *~ 0.5;
+#X obj 707 165 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 333 351 throw~ master;
 #N canvas 0 22 1002 761 ding-2 0;
 #X obj 103 65 inlet;
 #X obj 175 417 outlet~;
@@ -870,19 +870,19 @@
 #X connect 18 0 2 0;
 #X connect 19 0 2 0;
 #X connect 20 0 5 0;
-#X restore 633 216 pd ding-2;
-#X obj 648 140 random 100;
-#X obj 648 184 sel 1;
-#X obj 647 163 expr if ($f1 < 50 \, 1 \, 5);
+#X restore 333 325 pd ding-2;
+#X obj 348 249 random 100;
+#X obj 348 293 sel 1;
+#X obj 347 272 expr if ($f1 < 50 \, 1 \, 5);
 #X obj 297 57 s key;
 #X obj 91 264 *~;
-#X obj 106 245 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 106 245 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 54 262 *~;
-#X obj 73 243 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 73 243 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 12 260 *~;
-#X obj 33 241 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 33 241 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 340 56 sel 90 88 67;
 #N canvas 10 25 679 498 drum-set 0;
@@ -1245,9 +1245,9 @@
 #X connect 32 0 33 0;
 #X restore 29 360 pd drum-set;
 #X obj 69 141 r key;
-#X obj 645 501 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+#X obj 569 282 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
-#X obj 645 555 throw~ master;
+#X obj 569 336 throw~ master;
 #N canvas 0 22 1002 761 ding 0;
 #X obj 103 65 inlet;
 #X obj 175 417 outlet~;
@@ -1290,14 +1290,14 @@
 #X connect 16 0 17 1;
 #X connect 17 0 5 0;
 #X connect 19 0 10 0;
-#X restore 645 529 pd ding;
+#X restore 569 310 pd ding;
 #X msg 144 308 0;
 #X obj 10 73 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
 ;
-#X msg 163 168 1;
+#X msg 172 165 1;
 #X msg 65 221 1;
 #X obj 69 163 sel 83 68 70;
-#X obj 208 175 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+#X obj 217 172 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
 #X obj 33 488 r key;
 #X obj 33 510 spigot;
@@ -1348,7 +1348,7 @@
 #X obj 390 419 sel 1;
 #X obj 390 396 expr if ($f1 < 20 \, 1 \, 0);
 #X obj 88 197 inlet;
-#X obj 88 219 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 88 219 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 170 377 *~;
 #X obj 494 104 inlet;
@@ -1358,7 +1358,7 @@
 #X obj 353 102 inlet;
 #X msg 353 124 1;
 #X obj 591 115 inlet;
-#X obj 591 176 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 591 176 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 374 493 spigot;
 #X text 465 467 send octa to change the scene;
@@ -1426,34 +1426,33 @@
 #X obj 270 533 r b-1;
 #X obj 27 457 expr pow($f1 \, 8);
 #X msg 32 406 0 \, 1 10000;
-#X obj 263 229 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 263 238 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
-#X obj 153 222 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 153 222 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 451 605 del 2000;
 #X msg 451 629 1;
 #X obj 450 557 t b b b;
 #X obj 450 580 del 3000;
 #X msg 270 555 1;
-#X obj 605 670 s osc-sig;
-#X msg 529 534 send /phase 1;
-#X msg 530 562 send /phase 2;
-#X msg 530 590 send /phase 3;
+#X obj 529 451 s osc-sig;
+#X msg 453 315 send /phase 1;
+#X msg 454 343 send /phase 2;
+#X msg 454 371 send /phase 3;
 #X obj 450 533 r b-5;
 #X obj 404 533 r b-4;
-#X msg 535 646 send /phase 5;
-#X msg 532 619 send /phase 4;
-#X msg 628 589 send /phase 6;
+#X msg 459 427 send /phase 5;
+#X msg 456 400 send /phase 4;
+#X msg 552 370 send /phase 6;
 #X obj 10 93 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
 ;
 #X obj 157 395 r noise-off;
 #X obj 240 333 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
-#X msg 629 618 send /dong 1;
-#X msg 629 645 send /stutter 1;
-#X msg 173 179 0;
+#X msg 553 399 send /dong 1;
+#X msg 553 426 send /stutter 1;
+#X msg 182 176 0;
 #X obj 134 140 r connect;
-#X obj 114 497 loadbang;
 #N canvas 383 67 1026 639 hh 0;
 #X obj 131 344 *~;
 #X obj 39 31 r~ sig_8th;
@@ -1513,8 +1512,8 @@
 #X connect 24 0 22 0;
 #X connect 24 0 25 0;
 #X connect 25 0 23 1;
-#X restore 786 47 pd hh;
-#X obj 786 103 throw~ master;
+#X restore 702 77 pd hh;
+#X obj 702 125 throw~ master;
 #N canvas 0 22 1054 614 slow-down 0;
 #N canvas 198 229 1209 723 strong-tom 0;
 #X obj 146 388 *~;
@@ -1619,7 +1618,7 @@
 #X connect 42 0 19 0;
 #X connect 43 0 11 0;
 #X connect 44 0 2 1;
-#X restore 66 396 pd strong-tom;
+#X restore 38 403 pd strong-tom;
 #X obj 54 253 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
 #X obj 40 108 r~ sig_8th;
@@ -1627,7 +1626,7 @@
 #X obj 38 224 change;
 #X floatatom 83 224 5 0 0 0 - - -, f 5;
 #X obj 141 372 unsig~ 1;
-#X obj 66 420 *~;
+#X obj 38 427 *~;
 #X obj 83 243 change;
 #X obj 83 289 spigot;
 #X msg 191 88 0;
@@ -1649,7 +1648,7 @@
 #X msg 56 289 0;
 #X obj 119 111 phasor~;
 #X obj 141 19 inlet;
-#X obj 66 442 outlet~;
+#X obj 38 449 outlet~;
 #X connect 0 0 7 0;
 #X connect 1 0 22 0;
 #X connect 3 0 4 0;
@@ -1684,10 +1683,9 @@
 #X connect 24 0 22 1;
 #X connect 25 0 15 0;
 #X connect 26 0 11 0;
-#X restore 882 67 pd slow-down;
-#X obj 830 40 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X restore 707 190 pd slow-down;
+#X obj 746 70 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X obj 786 72 spigot~;
 #N canvas 0 22 1208 690 pace-up 0;
 #N canvas 198 229 1209 723 strong-tom 0;
 #X obj 146 388 *~;
@@ -1793,7 +1791,6 @@
 #X connect 43 0 11 0;
 #X connect 44 0 2 1;
 #X restore 269 492 pd strong-tom;
-#X obj 270 562 throw~ master;
 #X obj 270 540 *~ 0.5;
 #X obj 230 324 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
@@ -1824,48 +1821,325 @@
 #X obj 340 188 phasor~;
 #X obj 283 54 inlet;
 #X text 324 53 trigger;
-#X obj 392 556 outlet;
-#X text 391 578 beat;
-#X obj 515 559 outlet;
-#X text 514 583 end;
-#X connect 0 0 14 0;
-#X connect 2 0 1 0;
-#X connect 3 0 25 0;
-#X connect 3 0 29 0;
-#X connect 5 0 6 0;
-#X connect 5 0 7 0;
-#X connect 6 0 3 0;
-#X connect 7 0 16 0;
-#X connect 8 0 10 0;
-#X connect 9 0 5 0;
-#X connect 10 0 9 0;
-#X connect 10 0 11 0;
-#X connect 11 0 0 1;
-#X connect 12 0 13 0;
-#X connect 12 0 26 0;
-#X connect 13 0 14 1;
-#X connect 13 0 18 1;
-#X connect 13 0 25 1;
-#X connect 14 0 2 0;
-#X connect 15 0 13 0;
+#X obj 91 536 outlet;
+#X text 90 558 beat;
+#X obj 214 539 outlet;
+#X text 213 563 end;
+#X obj 387 563 outlet~;
+#X connect 0 0 13 0;
+#X connect 1 0 32 0;
+#X connect 2 0 24 0;
+#X connect 2 0 28 0;
+#X connect 4 0 5 0;
+#X connect 4 0 6 0;
+#X connect 5 0 2 0;
+#X connect 6 0 15 0;
+#X connect 7 0 9 0;
+#X connect 8 0 4 0;
+#X connect 9 0 8 0;
+#X connect 9 0 10 0;
+#X connect 10 0 0 1;
+#X connect 11 0 12 0;
+#X connect 11 0 25 0;
+#X connect 12 0 13 1;
+#X connect 12 0 17 1;
+#X connect 12 0 24 1;
+#X connect 13 0 1 0;
+#X connect 14 0 12 0;
+#X connect 15 0 16 0;
 #X connect 16 0 17 0;
+#X connect 16 0 30 0;
 #X connect 17 0 18 0;
-#X connect 17 0 31 0;
-#X connect 18 0 19 0;
-#X connect 19 0 12 0;
-#X connect 20 0 26 1;
-#X connect 21 0 23 0;
-#X connect 22 0 15 0;
-#X connect 23 0 22 0;
-#X connect 23 1 20 0;
-#X connect 23 3 24 0;
-#X connect 24 0 26 0;
-#X connect 25 0 0 0;
-#X connect 26 0 8 0;
-#X connect 27 0 21 0;
+#X connect 18 0 11 0;
+#X connect 19 0 25 1;
+#X connect 20 0 22 0;
+#X connect 21 0 14 0;
+#X connect 22 0 21 0;
+#X connect 22 1 19 0;
+#X connect 22 3 23 0;
+#X connect 23 0 25 0;
+#X connect 24 0 0 0;
+#X connect 25 0 7 0;
+#X connect 26 0 20 0;
 #X restore 426 56 pd pace-up;
 #X obj 426 31 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
+#N canvas 339 152 719 527 aliens-talk 0;
+#N canvas 443 67 1130 733 arp 0;
+#X obj 50 492 *~;
+#X obj 80 464 expr~ min($v1*1.5 \, 1);
+#X obj 80 383 expr~ fmod($v1*3 \, 1);
+#X obj 50 609 *~;
+#X obj 85 553 expr~ abs(($v1%3)-2);
+#X obj 85 580 expr~ 0.5+(pow(($v1/2) \, 4)*0.5);
+#X obj 50 465 osc~;
+#X obj 50 318 +~;
+#X obj 94 284 osc~;
+#X obj 94 311 *~;
+#X floatatom 128 228 5 0 0 0 - - -, f 5;
+#X obj 245 469 expr~ if($v1==0 \, 3 \, if($v1==1 \, 5 \, if($v1==2
+\, 4 \, 7)));
+#X obj 49 211 mtof~;
+#X obj 119 92 expr~ if($v1==0 \, 7 \, if($v1==1 \, 3 \, if($v1==2 \,
+8 \, 7)));
+#X obj 65 162 expr~ if($v1==0 \, 0 \, if($v1==1 \, $v2 \, $v3));
+#X obj 155 125 expr~ if($v1==0 \, 12 \, if($v1==1 \, 10 \, if($v1==2
+\, 12 \, $v2)));
+#X obj 353 62 expr~ if($v1==0 \, 12 \, 11);
+#X obj 49 238 *~ 2;
+#X obj 50 31 r~ sig_8th;
+#X obj 352 9 r~ sig_main, f 13;
+#X obj 119 65 r~ count_phrase;
+#X obj 39 695 outlet~;
+#X obj 394 298 expr~ if($v1<$v2 \, abs(pow(abs(($v1/$v2)-1) \, $v3)-1)
+\, abs(pow(($v1-$V2)/(1-$v2) \, $v4)-1));
+#X obj 543 261 sig~ 0.05;
+#X obj 670 265 expr~ if($v1==0 \, 8 \, 2);
+#X obj 618 265 sig~ 4;
+#X obj 224 401 expr~ $v2+(sin($v1*3.1415*2)*($v2*0.9));
+#X floatatom 213 252 5 0 0 0 - - -, f 5;
+#X obj 94 257 *~ 0.5;
+#X obj 186 290 *~ 10;
+#X obj 245 496 expr~ if($v1==1 \, 7 \, 5);
+#X obj 245 442 expr~ floor($v1*16)%4;
+#X obj 352 36 expr~ floor($v1*8)%2;
+#X obj 80 356 expr~ fmod($v1*64 \, 1);
+#X obj 96 527 expr~ floor($v1*4*72)%$v2;
+#X obj 80 437 expr~ pow($v1 \, 16);
+#X obj 289 218 expr~ fmod($v1*32 \, 1);
+#X obj 483 197 expr~ floor($v1*32)%2;
+#X obj 50 636 *~ 0.04;
+#X obj 48 184 +~ 48;
+#X connect 0 0 3 0;
+#X connect 1 0 0 1;
+#X connect 2 0 22 0;
+#X connect 3 0 38 0;
+#X connect 4 0 5 0;
+#X connect 4 0 14 0;
+#X connect 5 0 3 1;
+#X connect 6 0 0 0;
+#X connect 7 0 6 0;
+#X connect 8 0 9 0;
+#X connect 9 0 7 1;
+#X connect 10 0 28 1;
+#X connect 11 0 30 0;
+#X connect 12 0 17 0;
+#X connect 12 0 29 0;
+#X connect 13 0 14 1;
+#X connect 14 0 39 0;
+#X connect 15 0 14 2;
+#X connect 16 0 15 1;
+#X connect 17 0 7 0;
+#X connect 17 0 28 0;
+#X connect 18 0 33 0;
+#X connect 18 0 34 0;
+#X connect 19 0 32 0;
+#X connect 19 0 36 0;
+#X connect 19 0 37 0;
+#X connect 20 0 13 0;
+#X connect 20 0 15 0;
+#X connect 22 0 35 0;
+#X connect 23 0 22 1;
+#X connect 24 0 22 3;
+#X connect 25 0 22 2;
+#X connect 26 0 9 1;
+#X connect 27 0 29 1;
+#X connect 28 0 8 0;
+#X connect 29 0 26 1;
+#X connect 30 0 34 1;
+#X connect 31 0 11 0;
+#X connect 32 0 16 0;
+#X connect 33 0 2 0;
+#X connect 34 0 4 0;
+#X connect 35 0 1 0;
+#X connect 36 0 26 0;
+#X connect 37 0 24 0;
+#X connect 38 0 21 0;
+#X connect 39 0 12 0;
+#X restore 200 173 pd arp;
+#X obj 279 208 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 279 143 f;
+#X obj 294 119 random 128;
+#X obj 279 56 r hh_count;
+#X obj 279 78 change;
+#X obj 279 100 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X floatatom 279 165 5 0 0 0 - - -, f 5;
+#X obj 279 184 expr if ($f1 > $f2 \, 1 \, 0);
+#X obj 200 195 *~;
+#X obj 327 158 expr if ($f1 == 1 \, 30 \, 120);
+#X msg 347 286 send /arp 0;
+#X msg 319 309 send /arp 1;
+#X obj 459 357 s osc-sig;
+#X obj 362 209 change;
+#X obj 317 213 sel 1;
+#X obj 362 232 sel 0;
+#X obj 200 217 *~ 0.8;
+#X obj 211 397 mono-pureverb4;
+#X msg 227 366 0 0.15 \, 1 0.4 \, 2 0.6 \, 3 0.2;
+#X obj 228 338 loadbang;
+#X obj 211 467 outlet~;
+#X obj 126 257 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 110 205 inlet;
+#X obj 210 264 *~;
+#X obj 542 221 inlet;
+#X obj 542 243 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 461 325 spigot;
+#X obj 263 252 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X connect 0 0 9 0;
+#X connect 1 0 10 0;
+#X connect 1 0 14 0;
+#X connect 1 0 15 0;
+#X connect 1 0 9 1;
+#X connect 2 0 7 0;
+#X connect 3 0 2 1;
+#X connect 4 0 5 0;
+#X connect 5 0 6 0;
+#X connect 6 0 2 0;
+#X connect 6 0 3 0;
+#X connect 7 0 8 0;
+#X connect 8 0 1 0;
+#X connect 9 0 17 0;
+#X connect 10 0 8 1;
+#X connect 11 0 27 0;
+#X connect 12 0 27 0;
+#X connect 14 0 16 0;
+#X connect 15 0 12 0;
+#X connect 16 0 11 0;
+#X connect 17 0 24 0;
+#X connect 18 0 21 0;
+#X connect 19 0 18 1;
+#X connect 20 0 19 0;
+#X connect 22 0 24 1;
+#X connect 23 0 22 0;
+#X connect 24 0 18 0;
+#X connect 25 0 26 0;
+#X connect 26 0 27 1;
+#X connect 27 0 13 0;
+#X restore 584 100 pd aliens-talk;
+#X obj 581 72 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 477 84 throw~ master;
+#X obj 584 122 throw~ master;
+#X obj 582 157 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 583 202 throw~ master;
+#N canvas 339 152 719 527 aliens-ambient 0;
+#N canvas 443 67 1130 733 arp 0;
+#X obj 50 492 *~;
+#X obj 80 464 expr~ min($v1*1.5 \, 1);
+#X obj 80 383 expr~ fmod($v1*3 \, 1);
+#X obj 50 609 *~;
+#X obj 85 553 expr~ abs(($v1%3)-2);
+#X obj 85 580 expr~ 0.5+(pow(($v1/2) \, 4)*0.5);
+#X obj 50 465 osc~;
+#X obj 50 318 +~;
+#X obj 94 284 osc~;
+#X obj 94 311 *~;
+#X floatatom 128 228 5 0 0 0 - - -, f 5;
+#X obj 245 469 expr~ if($v1==0 \, 3 \, if($v1==1 \, 5 \, if($v1==2
+\, 4 \, 7)));
+#X obj 49 211 mtof~;
+#X obj 119 92 expr~ if($v1==0 \, 7 \, if($v1==1 \, 3 \, if($v1==2 \,
+8 \, 7)));
+#X obj 65 162 expr~ if($v1==0 \, 0 \, if($v1==1 \, $v2 \, $v3));
+#X obj 155 125 expr~ if($v1==0 \, 12 \, if($v1==1 \, 10 \, if($v1==2
+\, 12 \, $v2)));
+#X obj 353 62 expr~ if($v1==0 \, 12 \, 11);
+#X obj 49 238 *~ 2;
+#X obj 50 31 r~ sig_8th;
+#X obj 352 9 r~ sig_main, f 13;
+#X obj 119 65 r~ count_phrase;
+#X obj 39 695 outlet~;
+#X obj 394 298 expr~ if($v1<$v2 \, abs(pow(abs(($v1/$v2)-1) \, $v3)-1)
+\, abs(pow(($v1-$V2)/(1-$v2) \, $v4)-1));
+#X obj 543 261 sig~ 0.05;
+#X obj 670 265 expr~ if($v1==0 \, 8 \, 2);
+#X obj 618 265 sig~ 4;
+#X obj 224 401 expr~ $v2+(sin($v1*3.1415*2)*($v2*0.9));
+#X floatatom 213 252 5 0 0 0 - - -, f 5;
+#X obj 94 257 *~ 0.5;
+#X obj 186 290 *~ 10;
+#X obj 245 496 expr~ if($v1==1 \, 7 \, 5);
+#X obj 245 442 expr~ floor($v1*16)%4;
+#X obj 352 36 expr~ floor($v1*8)%2;
+#X obj 80 356 expr~ fmod($v1*64 \, 1);
+#X obj 96 527 expr~ floor($v1*4*72)%$v2;
+#X obj 80 437 expr~ pow($v1 \, 16);
+#X obj 289 218 expr~ fmod($v1*32 \, 1);
+#X obj 483 197 expr~ floor($v1*32)%2;
+#X obj 48 184 +~ 48;
+#X obj 49 636 *~ 0.2;
+#X connect 0 0 3 0;
+#X connect 1 0 0 1;
+#X connect 2 0 22 0;
+#X connect 3 0 39 0;
+#X connect 4 0 5 0;
+#X connect 4 0 14 0;
+#X connect 5 0 3 1;
+#X connect 6 0 0 0;
+#X connect 7 0 6 0;
+#X connect 8 0 9 0;
+#X connect 9 0 7 1;
+#X connect 10 0 28 1;
+#X connect 11 0 30 0;
+#X connect 12 0 17 0;
+#X connect 12 0 29 0;
+#X connect 13 0 14 1;
+#X connect 14 0 38 0;
+#X connect 15 0 14 2;
+#X connect 16 0 15 1;
+#X connect 17 0 7 0;
+#X connect 17 0 28 0;
+#X connect 18 0 33 0;
+#X connect 18 0 34 0;
+#X connect 19 0 32 0;
+#X connect 19 0 36 0;
+#X connect 19 0 37 0;
+#X connect 20 0 13 0;
+#X connect 20 0 15 0;
+#X connect 22 0 35 0;
+#X connect 23 0 22 1;
+#X connect 24 0 22 3;
+#X connect 25 0 22 2;
+#X connect 26 0 9 1;
+#X connect 27 0 29 1;
+#X connect 28 0 8 0;
+#X connect 29 0 26 1;
+#X connect 30 0 34 1;
+#X connect 31 0 11 0;
+#X connect 32 0 16 0;
+#X connect 33 0 2 0;
+#X connect 34 0 4 0;
+#X connect 35 0 1 0;
+#X connect 36 0 26 0;
+#X connect 37 0 24 0;
+#X connect 38 0 12 0;
+#X connect 39 0 21 0;
+#X restore 200 173 pd arp;
+#X obj 212 350 mono-pureverb4;
+#X obj 229 291 loadbang;
+#X obj 211 467 outlet~;
+#X obj 126 257 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 110 205 inlet;
+#X obj 210 264 *~;
+#X msg 229 319 0 0.95 \, 1 0.8 \, 2 0.3 \, 3 0.8;
+#X obj 200 217 *~ 0.5;
+#X connect 0 0 8 0;
+#X connect 1 0 3 0;
+#X connect 2 0 7 0;
+#X connect 4 0 6 1;
+#X connect 5 0 4 0;
+#X connect 6 0 1 0;
+#X connect 7 0 1 1;
+#X connect 8 0 6 0;
+#X restore 583 180 pd aliens-ambient;
+#X obj 702 99 *~;
 #X connect 2 0 1 0;
 #X connect 2 0 1 1;
 #X connect 2 0 3 0;
@@ -1894,7 +2168,7 @@
 #X connect 26 0 27 0;
 #X connect 28 0 26 1;
 #X connect 30 0 29 0;
-#X connect 31 0 105 0;
+#X connect 31 0 104 0;
 #X connect 33 0 32 0;
 #X connect 34 0 36 0;
 #X connect 35 0 33 0;
@@ -1909,7 +2183,7 @@
 #X connect 43 0 6 0;
 #X connect 44 0 8 0;
 #X connect 44 1 24 0;
-#X connect 44 2 108 0;
+#X connect 44 2 106 0;
 #X connect 46 0 54 0;
 #X connect 47 0 49 0;
 #X connect 47 0 94 0;
@@ -1961,7 +2235,7 @@
 #X connect 83 0 84 0;
 #X connect 83 1 81 0;
 #X connect 83 2 8 0;
-#X connect 84 0 108 0;
+#X connect 84 0 106 0;
 #X connect 85 0 28 0;
 #X connect 87 0 86 0;
 #X connect 88 0 86 0;
@@ -1984,14 +2258,18 @@
 #X connect 100 0 12 0;
 #X connect 100 0 41 0;
 #X connect 101 0 53 0;
-#X connect 102 0 58 0;
-#X connect 103 0 107 0;
-#X connect 105 0 30 0;
-#X connect 106 0 107 1;
-#X connect 107 0 104 0;
-#X connect 108 0 98 0;
-#X connect 108 1 24 0;
-#X connect 108 1 100 0;
-#X connect 108 1 50 0;
-#X connect 108 1 47 0;
+#X connect 102 0 115 0;
+#X connect 104 0 30 0;
+#X connect 105 0 115 1;
+#X connect 106 0 98 0;
+#X connect 106 1 24 0;
+#X connect 106 1 100 0;
+#X connect 106 1 50 0;
+#X connect 106 1 47 0;
+#X connect 106 2 110 0;
+#X connect 107 0 106 0;
+#X connect 108 0 111 0;
 #X connect 109 0 108 0;
+#X connect 112 0 114 0;
+#X connect 114 0 113 0;
+#X connect 115 0 103 0;

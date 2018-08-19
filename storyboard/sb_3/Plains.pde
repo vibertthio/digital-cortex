@@ -1,3 +1,14 @@
+class Plains {
+  float longitude = height * 0.6;
+  Plains() {
+
+  }
+
+  void draw() {
+    
+  }
+}
+
 void drawPlain(PGraphics src) {
   float longitude = height * 0.6;
 

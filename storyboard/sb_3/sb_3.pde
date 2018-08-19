@@ -30,9 +30,6 @@ PeasyCam cam;
 
 void setup() {
   size(1080, 900, OPENGL);
-  // cam = new PeasyCam(this, 100);
-  // cam.setMinimumDistance(50);
-  // cam.setMaximumDistance(500);
   // size(540, 450, OPENGL);
   // size(960, 540, OPENGL);
   // size(1920, 1080, OPENGL);
