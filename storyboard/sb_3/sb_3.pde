@@ -1,3 +1,7 @@
+import oscP5.*;
+import netP5.*;
+import peasy.*;
+
 PGraphics src;
 
 GlowRect rec;
@@ -9,7 +13,7 @@ PFont font;
 float unit;
 float rectWidth;
 
-int mode = 12;
+int mode = 11;
 int pdControlPhase = 0;
 int[][] noiseChoice = {
   { 1, 2, 3 },
@@ -18,16 +22,18 @@ int[][] noiseChoice = {
 int triggerCount = 0;
 boolean colorReverse = false;
 
-import oscP5.*;
-import netP5.*;
 
 OscP5 oscP5;
 NetAddress remoteLocation;
 
+PeasyCam cam;
 
 void setup() {
-  // size(1080, 900, OPENGL);
-  size(540, 450, OPENGL);
+  size(1080, 900, OPENGL);
+  // cam = new PeasyCam(this, 100);
+  // cam.setMinimumDistance(50);
+  // cam.setMaximumDistance(500);
+  // size(540, 450, OPENGL);
   // size(960, 540, OPENGL);
   // size(1920, 1080, OPENGL);
   // fullScreen(OPENGL);
@@ -97,18 +103,18 @@ void draw() {
     drawLines(src, 2);
   } else if (mode == 11) {
     src.background(0);
-    drawGrid(src);
+    drawPlain(src);
   } else if (mode == 12) {
-    src.background(0);
-
-    src.translate(width * 0.5, height * 0.5);
-    src.rotateY(frameCount * 0.02);
-
-    drawOctahedron(src, -0.7, -0.5, 0);
-    drawOctahedron(src, -0.3, -0.5, 0);
-
-    src.stroke(255, 0, 0);
-    src.line(width * -0.2, 0, width * 0.2, 0);
+    // src.background(0);
+    //
+    // src.translate(width * 0.5, height * 0.5);
+    // src.rotateY(frameCount * 0.02);
+    //
+    // drawOctahedron(src, -0.7, -0.5, 0);
+    // drawOctahedron(src, -0.3, -0.5, 0);
+    //
+    // src.stroke(255, 0, 0);
+    // src.line(width * -0.2, 0, width * 0.2, 0);
   }
 
   blink(src);

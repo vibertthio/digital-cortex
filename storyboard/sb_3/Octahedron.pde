@@ -291,34 +291,3 @@ void drawIndexLines2(PGraphics src, String txt, float _x, float _y, float _z, fl
   src.popMatrix();
 
 }
-
-void drawPlain(PGraphics src) {
-  src.pushMatrix();
-  src.translate(width * 0.5, height * 0.5, -500);
-  src.noStroke();
-  src.fill(255);
-  src.rectMode(CENTER);
-  src.translate(0, height * 0.3, 0);
-  src.rotateX(0.5 * PI);
-  src.rect(0, 0, 1000, 1000);
-
-  // src.rotateX(-0.5 * PI);
-  // src.translate(0, height * -0.6, 0);
-  // src.rotateX(0.5 * PI);
-  // src.rect(0, 0, 200, 200);
-  src.popMatrix();
-  src.pushMatrix();
-  src.translate(width * 0.5, height * 0.5, -1000);
-  src.noStroke();
-  src.fill(255);
-  src.rectMode(CENTER);
-  // src.translate(0, height * 0.3, 0);
-  // src.rotateX(0.5 * PI);
-  src.rect(0, 0, 1000, 1000);
-
-  // src.rotateX(-0.5 * PI);
-  // src.translate(0, height * -0.6, 0);
-  // src.rotateX(0.5 * PI);
-  // src.rect(0, 0, 200, 200);
-  src.popMatrix();
-}
