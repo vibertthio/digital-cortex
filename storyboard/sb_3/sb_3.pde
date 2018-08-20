@@ -28,6 +28,9 @@ NetAddress remoteLocation;
 
 PeasyCam cam;
 
+// Drawing Objects
+Plains plains;
+
 void setup() {
   size(1080, 900, OPENGL);
   // size(540, 450, OPENGL);
@@ -50,6 +53,8 @@ void setup() {
   initOctahedron();
   initParticles();
   initLines();
+
+  plains = new Plains();
 }
 
 void draw() {
@@ -100,7 +105,8 @@ void draw() {
     drawLines(src, 2);
   } else if (mode == 11) {
     src.background(0);
-    drawPlain(src);
+    plains.update();
+    plains.draw(src);
   } else if (mode == 12) {
     // src.background(0);
     //
