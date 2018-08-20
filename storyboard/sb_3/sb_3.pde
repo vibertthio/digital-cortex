@@ -189,9 +189,10 @@ void keyPressed() {
   }
 
   if (key == 'a') {
-    // rec.startFadeIn();
     resetOctaShader();
-
+  }
+  if (key == 's') {
+    plains.startFlashHorizontal();
   }
 
 }
