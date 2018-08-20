@@ -1,5 +1,7 @@
 # Digital Cortex
 
+![](./assets/demo.jpg)
+
 ## DCR-TRV30
 弟弟終於進了大學。多少受到我的影響，他選擇了北藝大新媒體藝術學系。也因此，他開始接觸攝影、注意身邊許多被淘汰的科技儀器，包括我們家裡面那台許久沒動的手持 [Sony DCR-TRV30](https://www.cnet.com/products/sony-dcr-trv30/specs/) 與裝了一鐵盒的 Mini DV 帶。裡面盛裝的是我們的童年，那些黃黃的、畫面模糊的印象。
 
