@@ -268,7 +268,6 @@ void oscEvent(OscMessage msg) {
       }
     }
   } else if (msg.checkAddrPattern("/stutter")) {
-    println("in");
     if (msg.checkTypetag("i")) {
       int value = msg.get(0).intValue();
       if (value == 1) {
