@@ -25,6 +25,25 @@ void drawParticles(PGraphics src) {
     src.popMatrix();
   }
 }
+void drawParticles(PGraphics src, float xpos, float ypos) {
+  if (showParticles) {
+    if (random(1) < 0.9) {
+      // showParticles = false;
+    }
+    updateParticlesShader();
+
+    src.shader(particlesShader);
+    src.pushMatrix();
+    // src.background(0);
+    src.translate(xpos, ypos);
+    // src.ambientLight(0, 0, 0);
+    src.rotateY(octaAlpha);
+    // octaAlpha += 0.005;
+    src.shape(particles);
+    src.resetShader();
+    src.popMatrix();
+  }
+}
 void updateShowingParticles() {
   if (showParticles) {
     if (random(1) < 0.9) {

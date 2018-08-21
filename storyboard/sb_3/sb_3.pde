@@ -187,12 +187,25 @@ void keyPressed() {
   if (key == 't') {
     mode = 10;
   }
+  if (key == 'y') {
+    mode = 11;
+  }
 
   if (key == 'a') {
     resetOctaShader();
   }
   if (key == 's') {
-    plains.startFlashHorizontal();
+    plains.startScanning();
+  }
+  if (key == 'd') {
+    plains.alligning = !plains.alligning;
+  }
+  if (key == 'f') {
+    if (plains.finalLongitude > 5) {
+      plains.finalLongitude = 0;
+    } else {
+      plains.finalLongitude = plains.normalLongitude;
+    }
   }
 
 }
