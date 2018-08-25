@@ -1,4 +1,4 @@
-#N canvas 687 60 817 676 10;
+#N canvas 925 257 817 676 10;
 #X msg 31 28 \; pd dsp 0;
 #X obj 189 48 k_dac~;
 #X obj 189 23 catch~ master;
@@ -42,7 +42,7 @@
 #X obj 361 34 expr~ if($v1==0 \, 2 \, 3);
 #X obj 23 115 expr~ if($v1==31 \, 4 \, $v2);
 #X obj 340 457 spigot;
-#X obj 388 446 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 388 446 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 379 408 inlet;
 #X connect 0 0 5 0;
@@ -320,7 +320,7 @@
 #X obj 480 129 s osc-sig;
 #X obj 314 33 change;
 #X obj 421 64 spigot;
-#X obj 428 33 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 428 33 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 385 8 inlet;
 #X connect 0 0 16 0;
@@ -579,12 +579,12 @@
 #X msg 227 366 0 0.15 \, 1 0.4 \, 2 0.6 \, 3 0.2;
 #X obj 228 338 loadbang;
 #X obj 211 467 outlet~;
-#X obj 126 257 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 126 257 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 110 205 inlet;
 #X obj 210 264 *~;
 #X obj 542 221 inlet;
-#X obj 542 243 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 542 243 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 461 325 spigot;
 #X connect 0 0 9 0;
@@ -618,11 +618,11 @@
 #X connect 26 0 27 1;
 #X connect 27 0 13 0;
 #X restore 182 268 pd aliens-talk;
-#X obj 131 244 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 131 244 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
-#X obj 174 245 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 174 245 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
-#N canvas 448 78 582 496 osc-connection 1;
+#N canvas 939 177 582 496 osc-connection 1;
 #X obj 120 214 udpsend;
 #X obj 120 117 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
@@ -819,7 +819,7 @@
 #X obj 341 131 throw~ master;
 #X obj 39 288 *~;
 #X obj 29 313 throw~ master;
-#X obj 109 289 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 109 289 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 707 251 throw~ master;
 #X obj 707 217 *~ 0.5;
@@ -876,13 +876,13 @@
 #X obj 347 272 expr if ($f1 < 50 \, 1 \, 5);
 #X obj 297 57 s key;
 #X obj 91 264 *~;
-#X obj 106 245 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 106 245 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 54 262 *~;
-#X obj 73 243 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 73 243 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 12 260 *~;
-#X obj 33 241 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 33 241 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 340 56 sel 90 88 67;
 #N canvas 225 274 908 595 drum-set 0;
@@ -1198,7 +1198,7 @@
 #X obj 15 59 expr~ floor($v1 * 288);
 #X obj 163 17 r key;
 #X obj 163 39 sel 65;
-#X obj 163 61 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 163 61 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 15 108 spigot;
 #X obj 166 254 sel 0;
@@ -1305,7 +1305,7 @@
 -1 -1;
 #X obj 33 488 r key;
 #X obj 33 510 spigot;
-#X obj 83 489 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 83 489 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 33 532 sel 49 50 51 52 53 54 55 56 57 58;
 #X obj 33 554 s b-1;
@@ -1352,7 +1352,7 @@
 #X obj 390 419 sel 1;
 #X obj 390 396 expr if ($f1 < 20 \, 1 \, 0);
 #X obj 88 197 inlet;
-#X obj 88 219 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 88 219 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 170 377 *~;
 #X obj 494 104 inlet;
@@ -1362,7 +1362,7 @@
 #X obj 353 102 inlet;
 #X msg 353 124 1;
 #X obj 591 115 inlet;
-#X obj 591 176 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 591 176 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 374 493 spigot;
 #X text 465 467 send octa to change the scene;
@@ -1430,9 +1430,9 @@
 #X obj 270 533 r b-1;
 #X obj 27 457 expr pow($f1 \, 8);
 #X msg 32 406 0 \, 1 10000;
-#X obj 263 238 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 263 238 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
-#X obj 153 222 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 153 222 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 451 605 del 2000;
 #X msg 451 629 1;

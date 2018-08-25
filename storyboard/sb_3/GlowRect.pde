@@ -71,7 +71,8 @@ class GlowRect {
 
     if (noise) {
       src.translate(noisePos, dataUnit);
-      src.fill(0);
+      // src.fill(0);
+      src.fill(255, 0, 0);
       // src.rect(0, 0, dataUnit, dataUnit);
       src.rect(0, 0, dataUnit, dataUnit * 0.2);
     }
@@ -123,6 +124,7 @@ void dataPoints(PGraphics src) {
   src.pushMatrix();
   src.noStroke();
   src.fill(255);
+  // src.fill(255, 0, 0);
   src.translate(width * 0.5 + rectWidth * 0.5 + dataGap, height * 0.5 - rectWidth * 0.5);
   src.rectMode(CORNER);
 

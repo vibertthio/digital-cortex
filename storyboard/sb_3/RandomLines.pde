@@ -32,8 +32,8 @@ void randomVerticalLines(PGraphics src) {
     src.fill(255);
     src.rectMode(CORNER);
     // src.rect(pos, 0, rectWidth, h);
-    // src.rect(pos, 0, h, rectWidth);
-    src.rect(pos, 0, h, random(rectWidth * 0.5, rectWidth * 1.5));
+    src.rect(pos, 0, h, rectWidth);
+    // src.rect(pos, 0, h, random(rectWidth * 0.5, rectWidth * 1.5));
     pos += h;
     h = random(0, rectWidth * 0.05);
   }
