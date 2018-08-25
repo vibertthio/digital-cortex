@@ -5,13 +5,13 @@ class GlowRect {
   float targetW;
   float targetH;
 
-  // float alpha = 0;
-  float alpha = 255;
+  float alpha = 0;
+  // float alpha = 255;
   TimeLine startTimer;
   float pow = 8;
 
-  // boolean fill = false;
-  boolean fill = true;
+  boolean fill = false;
+  // boolean fill = true;
   boolean showingDataPoints = false;
   boolean noise = false;
   float noisePos;

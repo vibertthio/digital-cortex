@@ -13,7 +13,7 @@ PFont font;
 float unit;
 float rectWidth;
 
-int mode = 11;
+int mode = 0;
 int pdControlPhase = 0;
 int[][] noiseChoice = {
   { 1, 2, 3 },
@@ -140,9 +140,11 @@ void initGlow() {
 
 void keyPressed() {
   if (key == ' ') {
-    OscMessage msg = new OscMessage("/connect");
-    msg.add(1);
-    oscP5.send(msg, remoteLocation);
+    // OscMessage msg = new OscMessage("/connect");
+    // msg.add(1);
+    // oscP5.send(msg, remoteLocation);
+
+    reset();
   }
 
   if (key == '1') {
@@ -208,6 +210,12 @@ void keyPressed() {
     }
   }
 
+}
+
+void reset() {
+  mode = 0;
+  rec.alpha = 0;
+  rec.fill = false;
 }
 
 boolean dongStarted = false;

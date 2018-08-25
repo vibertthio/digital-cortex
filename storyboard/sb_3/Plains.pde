@@ -261,7 +261,8 @@ class Plains {
     src.rotateX(0.5 * PI);
 
     float shift = longitude / 10;
-    float rotationZ = 0.2 * PI * sin(frameCount * 0.01);
+    // float rotationZ = 0.2 * PI * sin(frameCount * 0.01);
+    float rotationZ = 0.2 * PI * sin(frameCount * 0.03);
     src.translate(0, 0, shift * 0.5);
 
     for (int i = 0; i < 10; i++) {
@@ -313,7 +314,7 @@ class Plains {
         src.fill(255);
       }
 
-      src.rotateZ(rotationZ);
+      src.rotateZ(rotationZ + (i - 5) * 0.1 * sin(frameCount * 0.03));
       src.fill(255);
       src.noStroke();
       src.rect(0, 0, 150, 150);

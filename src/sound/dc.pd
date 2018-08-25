@@ -1,4 +1,4 @@
-#N canvas 719 209 817 676 10;
+#N canvas 687 60 817 676 10;
 #X msg 31 28 \; pd dsp 0;
 #X obj 189 48 k_dac~;
 #X obj 189 23 catch~ master;
@@ -622,14 +622,14 @@
 1;
 #X obj 174 245 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#N canvas 448 78 582 496 osc-connection 0;
+#N canvas 448 78 582 496 osc-connection 1;
 #X obj 120 214 udpsend;
 #X obj 120 117 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 120 140 sel 0 1;
 #X msg 120 162 disconnect;
 #X msg 140 189 connect localhost 2204;
-#X obj 120 236 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 120 236 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 287 206 packOSC;
 #X obj 287 228 spigot;
@@ -885,7 +885,7 @@
 #X obj 33 241 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 340 56 sel 90 88 67;
-#N canvas 10 25 679 498 drum-set 0;
+#N canvas 225 274 908 595 drum-set 0;
 #X obj 18 257 r~ sig_main;
 #X obj 18 281 unsig~ 1;
 #X floatatom 18 303 5 0 0 0 - - -, f 5;
@@ -1015,42 +1015,42 @@
 #X obj 188 185 phasor~ 9001;
 #X obj 360 249 sig~ 0;
 #X obj 177 161 phasor~ 10000;
-#X obj 279 205 expr~ pow($v1 \, 20);
 #X obj 198 203 osc~ 10000;
 #X obj 208 213 osc~ 50000;
-#X obj 431 154 expr~ pow($v1 \, 20);
-#X obj 431 176 expr~ $v1 * 40000 + 10000;
-#X msg 279 143 1 \, 0 200;
-#X obj 176 386 *~ 0.2;
 #X obj 177 363 hip~ 10000;
+#X obj 443 102 expr~ pow($v1 \, 30);
+#X msg 278 143 1 \, 0 150;
+#X obj 431 177 expr~ $v1 * 40000 + 20000;
+#X obj 278 204 expr~ pow($v1 \, 25);
+#X obj 175 386 *~ 0.3;
 #X connect 0 0 3 0;
 #X connect 2 0 8 0;
-#X connect 3 0 19 0;
+#X connect 3 0 18 0;
 #X connect 4 0 9 0;
-#X connect 4 0 14 0;
 #X connect 4 0 17 0;
+#X connect 4 0 20 0;
 #X connect 5 0 2 1;
 #X connect 6 0 7 0;
 #X connect 7 0 8 1;
-#X connect 8 0 21 0;
+#X connect 8 0 16 0;
 #X connect 10 0 2 0;
 #X connect 11 0 2 0;
 #X connect 12 0 5 1;
 #X connect 13 0 2 0;
-#X connect 14 0 5 0;
+#X connect 14 0 2 0;
 #X connect 15 0 2 0;
-#X connect 16 0 2 0;
-#X connect 17 0 18 0;
-#X connect 18 0 15 0;
-#X connect 18 0 13 0;
-#X connect 19 0 4 0;
-#X connect 20 0 1 0;
-#X connect 21 0 20 0;
+#X connect 16 0 21 0;
+#X connect 17 0 19 0;
+#X connect 18 0 4 0;
+#X connect 19 0 14 0;
+#X connect 19 0 13 0;
+#X connect 20 0 5 0;
+#X connect 21 0 1 0;
 #X restore 144 300 pd ding-3;
 #X obj 141 321 throw~ master;
 #X obj 138 281 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
-#N canvas 0 22 723 669 wong 0;
+#N canvas 211 130 723 669 wong 0;
 #X obj 137 44 inlet;
 #X obj 180 47 inlet;
 #X obj 230 43 inlet;
@@ -1198,25 +1198,27 @@
 #X obj 15 59 expr~ floor($v1 * 288);
 #X obj 163 17 r key;
 #X obj 163 39 sel 65;
-#X obj 163 61 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 163 61 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 15 108 spigot;
 #X obj 166 254 sel 0;
 #X obj 234 319 perk-snare;
 #X obj 234 481 throw~ master;
 #X obj 15 205 sel 0 6;
-#X obj 166 232 % 3;
-#X obj 217 263 % 24;
 #X obj 217 285 sel 0;
 #X obj 234 459 *~ 0.2;
 #X obj 258 49 r key;
 #X obj 257 71 sel 83;
+#X obj 331 272 spigot;
+#X obj 408 249 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 166 232 % 2;
+#X obj 217 262 % 24;
 #X connect 0 0 1 0;
 #X connect 1 0 2 0;
 #X connect 3 0 5 0;
 #X connect 5 0 4 0;
 #X connect 6 0 3 0;
-#X connect 6 0 12 1;
 #X connect 7 0 3 1;
 #X connect 8 0 7 0;
 #X connect 9 0 10 0;
@@ -1227,23 +1229,25 @@
 #X connect 16 0 17 0;
 #X connect 16 0 18 0;
 #X connect 17 0 27 0;
-#X connect 17 0 28 0;
+#X connect 17 0 34 0;
 #X connect 18 0 17 0;
-#X connect 18 0 29 0;
+#X connect 18 0 35 0;
 #X connect 19 0 15 0;
 #X connect 20 0 21 0;
 #X connect 21 0 22 0;
 #X connect 22 0 23 1;
 #X connect 23 0 16 0;
 #X connect 24 0 11 0;
-#X connect 25 0 31 0;
+#X connect 25 0 29 0;
 #X connect 27 0 6 0;
-#X connect 28 0 24 0;
-#X connect 29 0 30 0;
-#X connect 30 0 25 0;
-#X connect 31 0 26 0;
-#X connect 32 0 33 0;
-#X restore 29 360 pd drum-set;
+#X connect 28 0 32 0;
+#X connect 29 0 26 0;
+#X connect 30 0 31 0;
+#X connect 32 0 25 0;
+#X connect 33 0 32 1;
+#X connect 34 0 24 0;
+#X connect 35 0 28 0;
+#X restore 707 279 pd drum-set;
 #X obj 69 141 r key;
 #X obj 569 282 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
@@ -1301,7 +1305,7 @@
 -1 -1;
 #X obj 33 488 r key;
 #X obj 33 510 spigot;
-#X obj 83 489 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 83 489 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 33 532 sel 49 50 51 52 53 54 55 56 57 58;
 #X obj 33 554 s b-1;
