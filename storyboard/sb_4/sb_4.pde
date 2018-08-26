@@ -13,7 +13,7 @@ PFont font;
 float unit;
 float rectWidth;
 
-int mode = 0;
+int mode = 4;
 int pdControlPhase = 0;
 int[][] noiseChoice = {
   { 1, 2, 3 },
@@ -31,6 +31,7 @@ PeasyCam cam;
 // Drawing Objects
 Plains plains;
 Octa octa;
+Grid grid;
 
 void setup() {
   size(1080, 900, OPENGL);
@@ -50,13 +51,12 @@ void setup() {
   oscP5 = new OscP5(this, 2204);
   remoteLocation = new NetAddress("127.0.0.1", 2205);
 
-  // initDataPoints();
-  // initOctahedron();
   initParticles();
   initLines();
 
   octa = new Octa();
   plains = new Plains();
+  grid = new Grid();
 
   tryConnect();
 }
@@ -75,21 +75,19 @@ void draw() {
     randomDots(src);
   } else if (mode == 4) {
     src.background(0);
-    drawLines(src);
+    if (pdControlPhase == 4) {
+      if (random(1) < 0.2) {
+        drawParticles(src);
+      }
+      if (random(1) < 0.7) {
+        drawLines(src);
+      }
+    } else {
+      drawLines(src);
+    }
   } else if (mode == 5) {
     src.background(0);
-    // drawLines(src);
-    // drawOctahedron(src);
-    octa.draw(src);
-
     drawParticles(src);
-    drawIndexLines2(src, "vertical", -300, -200, 0, PI);
-    drawIndexLines2(src, "shinyi", -150, 150, 100, 0.5 * PI);
-    drawIndexLines2(src, "vibert", 250, 100, -10, 0.1 * PI);
-
-    drawGrid(src);
-
-    // drawPlain(src);
   } else if (mode == 6) {
     src.background(0);
     drawLines(src, 0);
@@ -111,16 +109,19 @@ void draw() {
     plains.update();
     plains.draw(src);
   } else if (mode == 12) {
-    // src.background(0);
-    //
-    // src.translate(width * 0.5, height * 0.5);
-    // src.rotateY(frameCount * 0.02);
-    //
-    // drawOctahedron(src, -0.7, -0.5, 0);
-    // drawOctahedron(src, -0.3, -0.5, 0);
-    //
-    // src.stroke(255, 0, 0);
-    // src.line(width * -0.2, 0, width * 0.2, 0);
+    src.background(0);
+    octa.draw(src);
+  } else if (mode == 13) {
+
+    // array octa
+    src.background(0);
+    octa.drawOctaArray(src);
+  } else if (mode == 14) {
+
+    // array octa
+    src.background(0);
+    grid.draw(src);
+    octa.draw(src);
   }
 
   blink(src);
@@ -128,9 +129,32 @@ void draw() {
   PGraphics graphics = glowManager.dowGlow(src);
   image(graphics, 0, 0);
 
+
   if (mode == 0) {
     drawText();
+  } else if (mode == 5 || mode == 4) {
+    drawMask();
   }
+
+
+}
+
+boolean maskOn = false;
+boolean maskLeft = true;
+void drawMask() {
+  if (maskOn) {
+    fill(0);
+    noStroke();
+    if (maskLeft) {
+      rect(0, 0, width * 0.5, height);
+    } else {
+      rect(width * 0.5, 0, width * 0.5, height);
+    }
+  }
+}
+
+void reverseMask() {
+  maskLeft = !maskLeft;
 }
 
 void initGlow() {
@@ -143,8 +167,8 @@ void initGlow() {
 
 void keyPressed() {
   if (key == ' ') {
-    // reset();
-    setState();
+    reset();
+    // setState();
   }
 
   if (key == '1') {
@@ -216,6 +240,9 @@ void keyPressed() {
   if (key == 'x') {
     octa.changeSize();
   }
+  if (key == 'c') {
+    reverseMask();
+  }
 
 }
 
@@ -228,7 +255,7 @@ void reset() {
 boolean dongStarted = false;
 void oscEvent(OscMessage msg) {
   // print("### received an osc message.");
-  // print(" addrpattern: " + msg.addrPattern());
+  // println(" osc: " + msg.addrPattern());
   // println(" typetag: "+ msg.typetag());
 
   if (msg.checkAddrPattern("/bass")) {
@@ -262,14 +289,19 @@ void oscEvent(OscMessage msg) {
       int value = msg.get(0).intValue();
       if (value == 1) {
         if (pdControlPhase == 4) {
-          mode = 4;
-        } else {
+          if (mode == 0) {
+            mode = 3;
+          } else {
+            mode = 4;
+          }
+        } else if (pdControlPhase == 3) {
           mode = noiseChoice[0][int(random(3))];
         }
       } else if (value == 0) {
         if (pdControlPhase == 3) {
           mode = 0;
         } else if (pdControlPhase == 4) {
+          reverseMask();
           mode = 5;
         }
       }
@@ -296,23 +328,42 @@ void oscEvent(OscMessage msg) {
     if (msg.checkTypetag("i")) {
       int value = msg.get(0).intValue();
       if (value == 1) {
+
+        // 1. rec fade in
         rec.startFadeIn();
         pdControlPhase = 1;
       } else if (value == 2) {
+
+        // 2. flash rec
         pdControlPhase = 2;
       } else if (value == 3) {
+
+        // 3. reading datas
         rec.fill = true;
         rec.showingDataPoints = true;
         pdControlPhase = 3;
       } else if (value == 4) {
-        // mode = 7;
-        mode = 1;
+        mode = 4;
         pdControlPhase = 4;
       } else if (value == 5) {
         pdControlPhase = 5;
-        mode = 7;
+        mode = 12;
+        octa.changeSize(1.2);
+        octa.scale = 1.0;
+        blinkCount = 1;
       } else if (value == 6) {
+
         pdControlPhase = 6;
+        mode = 14;
+        octa.scale = 1.0;
+        octa.changeSize(0.3);
+        println("phase 6");
+
+        octa.octaMerging = true;
+        octa.reset();
+
+      } else if (value == 20) {
+        pdControlPhase = 20;
         mode = 0;
         rec.showingDataPoints = false;
         rec.startFadeIn(4000);
@@ -332,7 +383,6 @@ void oscEvent(OscMessage msg) {
       }
     }
   } else if (msg.checkAddrPattern("/stutter")) {
-    println("in");
     if (msg.checkTypetag("i")) {
       int value = msg.get(0).intValue();
       if (value == 1) {
@@ -343,11 +393,33 @@ void oscEvent(OscMessage msg) {
         }
       }
     }
+  } else if (msg.checkAddrPattern("/octa-array")) {
+    if (msg.checkTypetag("i")) {
+      int value = msg.get(0).intValue();
+      if (value > 0) {
+        mode = 13;
+        octa.scale = 0.1;
+      }
+
+      if (value < 7) {
+        octa.arrayNumber = value;
+      } else {
+        octa.arrayNumber += 4;
+      }
+
+      if (value == 16) {
+        mode = 14;
+        blinkCount = 1;
+        grid.redLineAlpha = 400;
+      }
+    }
   }
 }
 
 void showFrameRate() {
   String f="digital cortex, fr:"+int((int(frameRate/4))*4);
+  f += " md: " + mode;
+  f += " ph: " + pdControlPhase;
   surface.setTitle(f);
 }
 

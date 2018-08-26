@@ -110,7 +110,7 @@ void initLines() {
   lines = new PShape[4];
   lines[0] = createLines(1000);
   lines[1] = createLines1(1000);
-  lines[2] = createLines2(2000);
+  lines[2] = createLines2(4000);
   lines[3] = createLines3(2000);
   linesShader = loadShader("lines/frag.glsl", "lines/vert.glsl");
 }
@@ -319,14 +319,16 @@ PShape createLines2(int nOfL) {
     // float zpos2 = random(-range, range);
 
 
-    theta = random(1) * PI * 2;
-    zpos = random(1) * 2 - 1;
-    rsin = sqrt(1 - zpos * zpos);
-    xpos = rsin * cos(theta);
-    ypos = rsin * sin(theta);
-    xpos *= r;
-    ypos *= r;
-    zpos *= r;
+    do {
+      theta = random(1) * PI * 2;
+      zpos = random(1) * 2 - 1;
+      rsin = sqrt(1 - zpos * zpos);
+      xpos = rsin * cos(theta);
+      ypos = rsin * sin(theta);
+      xpos *= r;
+      ypos *= r;
+      zpos *= r;
+    } while (dist(xpos, ypos, zpos, xpos1, ypos1, zpos1) > 0.7 * r);
 
     float xpos2 = xpos;
     float ypos2 = ypos;

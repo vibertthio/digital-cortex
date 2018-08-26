@@ -1,37 +1,29 @@
 // vert.glsl
 #version 150
 
-
-
 uniform mat4 transform;
 uniform float uTime;
-uniform float size;
+uniform float ucale;
 
 in vec4 position;
-in vec4 color;
-in vec3 normal;
-in vec3 faceNormal;
-in vec3 center;
-in float delay;
+in vec4 positionNew;
+in vec3 col;
+in float noise;
 
 out vec4 vertColor;
-out vec3 vPosition;
-out float vNoise;
-out float vNow;
 
-const float duration = 0.5;
-// const float delayAll = 2.0;
-const float delayAll = 0.5;
-
-
-/*****
-Others
-*****/
+const float duration = 0.01;
+const float delayAll = 50.0;
+const float smoothy = 0.1;
+const float wave = 10.0;
+const float size = 1.0;
 
 float exponentialOut(float t) {
   return t == 1.0 ? t : 1.0 - pow(2.0, -10.0 * t);
 }
-
+float rand(vec2 co){
+    return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+}
 mat4 computeTranslateMat(vec3 v) {
   return mat4(
     1.0, 0.0, 0.0, 0.0,
@@ -40,9 +32,6 @@ mat4 computeTranslateMat(vec3 v) {
     v.x, v.y, v.z, 1.0
   );
 }
-
-
-
 mat4 computeRotateMatX(float radian) {
   return mat4(
     1.0, 0.0, 0.0, 0.0,
@@ -51,7 +40,6 @@ mat4 computeRotateMatX(float radian) {
     0.0, 0.0, 0.0, 1.0
   );
 }
-
 mat4 computeRotateMatY(float radian) {
   return mat4(
     cos(radian), 0.0, sin(radian), 0.0,
@@ -60,7 +48,6 @@ mat4 computeRotateMatY(float radian) {
     0.0, 0.0, 0.0, 1.0
   );
 }
-
 mat4 computeRotateMatZ(float radian) {
   return mat4(
     cos(radian), -sin(radian), 0.0, 0.0,
@@ -69,7 +56,6 @@ mat4 computeRotateMatZ(float radian) {
     0.0, 0.0, 0.0, 1.0
   );
 }
-
 mat4 computeRotateMat(float radX, float radY, float radZ) {
   return computeRotateMatX(radX) * computeRotateMatY(radY) * computeRotateMatZ(radZ);
 }
@@ -78,33 +64,22 @@ mat4 computeRotateMat(float radX, float radY, float radZ) {
 Noise
 *****/
 
-vec3 mod289(vec3 x)
-{
+vec3 mod289(vec3 x) {
   return x - floor(x * (1.0 / 289.0)) * 289.0;
 }
-
-vec4 mod289(vec4 x)
-{
+vec4 mod289(vec4 x) {
   return x - floor(x * (1.0 / 289.0)) * 289.0;
 }
-
-vec4 permute(vec4 x)
-{
+vec4 permute(vec4 x) {
   return mod289(((x*34.0)+1.0)*x);
 }
-
-vec4 taylorInvSqrt(vec4 r)
-{
+vec4 taylorInvSqrt(vec4 r) {
   return 1.79284291400159 - 0.85373472095314 * r;
 }
-
 vec3 fade(vec3 t) {
   return t*t*t*(t*(t*6.0-15.0)+10.0);
 }
-
-// Classic Perlin noise
-float cnoise(vec3 P)
-{
+float cnoise(vec3 P) {
   vec3 Pi0 = floor(P); // Integer part for indexing
   vec3 Pi1 = Pi0 + vec3(1.0); // Integer part + 1
   Pi0 = mod289(Pi0);
@@ -173,28 +148,31 @@ float cnoise(vec3 P)
 }
 
 
-// float smoothy = 0.01;
-float smoothy = 0.005;
-// float wave = 4.0;
-float wave = 20.0;
-// float size = 0.3;
-
 void main() {
-  float now = exponentialOut(max((uTime - delayAll - delay - (faceNormal.x + 1.0) / 2.0 - (faceNormal.y + 1.0) / 2.0) / duration, 0.0));
-  mat4 translateMat = computeTranslateMat(vec3(faceNormal) * 1200.0 * (1.0 - now) + vec3(0.0, sin(uTime) * 10.0, 0.0));
-  mat4 rotateMat = computeRotateMat(0.0, radians((1.0 - now) * faceNormal.y * 1000.0), 0.0);
-  float rotateRadian = radians((uTime + faceNormal.x + faceNormal.y) * 1440.0);
-  mat4 rotateMatSelf = computeRotateMat(rotateRadian, rotateRadian, 0.0);
-  // mat4 rotateMatSelf = computeRotateMat(0.0, 0.0, 0.0);
-  // float noise = smoothstep(-0.4, 0.4, cnoise(vec3(position.x * smoothy - uTime, position.y * smoothy - uTime, position.z * smoothy + uTime))) * wave - 1.0;
+  // float now = exponentialOut(max((uTime - delayAll - (position.x + 1.0) / 2.0 - (position.y + 1.0) / 2.0) / duration, 0.0));
+  float now = exponentialOut(max((uTime - delayAll - (position.x) / 1.0) / duration, 0.0));
   float noise = smoothstep(-0.4, 0.4, cnoise(vec3(position.x * smoothy - uTime, position.y * smoothy - uTime, position.z * smoothy + uTime))) * wave;
 
-  vec3 updatePositionSelf = (rotateMatSelf * vec4(position.xyz - center, 1.0)).xyz * (1.0 - now) + position.xyz * size + normalize(position.xyz) * noise;
-  vec4 updatePosition = rotateMat * translateMat * vec4(updatePositionSelf, 1.0);
-  vPosition = updatePosition.xyz;
-  vNoise = noise;
-  vNow = now;
+  float factor = sin(noise * 10.0 + uTime * 2.0);
+  // float factor = sin(noise * 10.0 + (uTime + position.x + position.y) * 2.0);
+  // float factor = sin(noise * 10.0 + (uTime + position.x + position.y) * 10.0);
+  // vec3 updatePosSelf = position.xyz * (1.0 + 0.03 * factor * factor);
+  vec3 updatePosSelf = position.xyz * size + normalize(position.xyz) * noise;
 
-  gl_Position = transform * updatePosition;
-  vertColor = color;
+  // vec3 updatePos = position.xyz * (1.0 + 0.1 * factor * factor);
+
+
+
+  mat4 rotateMat = computeRotateMat(0.0, radians((1.0 - now) * (position.y + position.x + position.z) * 10.0), 0.0);
+  mat4 translateMat = computeTranslateMat(vec3(position) * 5.0 * (1.0 - now) + vec3(0.0, sin(uTime) * 5.0, cos(uTime) * 1.0));
+
+  // vec4 updatePos = translateMat * vec4(updatePosSelf, 1.0);
+  // vec4 updatePos = rotateMat * vec4(updatePosSelf, 1.0);
+  vec4 updatePos = vec4(updatePosSelf, 1.0);
+  gl_Position = transform * updatePos;
+
+  // gl_Position = transform * vec4(updatePos, position.w);
+
+  vertColor = vec4(col, 1.0);
+  // vertColor = vec4(rand(updatePos.xy + uTime * 100), rand(updatePos.yz + uTime * 100), 0, 1.0);
 }
