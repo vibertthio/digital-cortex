@@ -46,6 +46,9 @@ class Plains {
     longitude = boxHeight * 0.8;
     normalLongitude = longitude;
     finalLongitude = longitude;
+
+    boxWidth = 934;
+    boxHeight = 768;
   }
 
 
@@ -58,13 +61,13 @@ class Plains {
       // monitorGrid[id] = !monitorGrid[id];
     }
 
-    // flash();
+    flash();
 
     scanShift();
     plainShifting();
     updateLongitude();
 
-    mouseControlDepth();
+    // mouseControlDepth();
   }
   void updateLongitude() {
     if (abs(longitude - finalLongitude) < 0.1) {
@@ -158,7 +161,9 @@ class Plains {
 
     // src.scale(0.8, 0.8, 0.8);
     // drawParticles(src, 0, 0);
-    drawFaceVertical(src, frameCount % 4);
+    drawFaceHorizontal(src, 1);
+    drawFaceHorizontal(src, 2);
+    drawFaceHorizontal(src, 3);
     src.popMatrix();
   }
   void drawGrid(PGraphics src) {
