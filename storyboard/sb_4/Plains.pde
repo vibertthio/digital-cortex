@@ -2,8 +2,8 @@ class Plains {
   float longitude;
   float normalLongitude;
   float finalLongitude;
-  float centerX = width * 0.5;
-  float centerY = height * 0.5;
+  float centerX = widthRender * 0.5;
+  float centerY = heightRender * 0.5;
   float centerZ = -200;
 
 
@@ -63,6 +63,8 @@ class Plains {
     scanShift();
     plainShifting();
     updateLongitude();
+
+    mouseControlDepth();
   }
   void updateLongitude() {
     if (abs(longitude - finalLongitude) < 0.1) {
@@ -156,6 +158,7 @@ class Plains {
 
     // src.scale(0.8, 0.8, 0.8);
     // drawParticles(src, 0, 0);
+    drawFaceVertical(src, frameCount % 4);
     src.popMatrix();
   }
   void drawGrid(PGraphics src) {
@@ -512,9 +515,16 @@ class Plains {
 
   // debug
   void mouseControlDepth() {
-    float h = map(mouseY, height, 0, -200, -1000);
-    centerZ = h;
-    boxDepth = map(h, -200, -400, 800, 1200);
+    float w = map(mouseX, widthRender, 0, 800, 1200);
+    println("boxWidth: " + w);
+    boxWidth = w;
+
+    float h = map(mouseY, heightRender, 0, 666, 1000);
+    println("boxHeight: " + h);
+    boxHeight = h;
+
+    // centerZ = h;
+    // boxDepth = map(h, -200, -400, 800, 1200);
   }
 
 }

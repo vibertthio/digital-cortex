@@ -1,6 +1,4 @@
 String randStr = newStr(200, 1);
-int pointX = 0;
-int pointY = 0;
 
 class Grid {
   boolean showSequence = false;
@@ -9,8 +7,18 @@ class Grid {
 
   float redLineAlpha = 255;
 
-  Grid() {
+  int col = 11;
+  int row = 9;
 
+  float gw;
+  float gh;
+
+  int pointX = 0;
+  int pointY = 0;
+
+  Grid() {
+    gw = widthRender / col;
+    gh = heightRender / row;
   }
   void draw(PGraphics src) {
     if (random(0, 1) < 0.3) {
@@ -22,7 +30,7 @@ class Grid {
     }
 
     src.pushMatrix();
-    src.translate(width * 0.5, height * 0.5);
+    src.translate(widthRender * 0.5, heightRender * 0.5);
 
     src.textFont(font);
     src.textSize(14);
@@ -55,13 +63,13 @@ class Grid {
       pointY = int(random(0, 9));
     }
 
-    for (int i = 0; i < 11; i++) {
-      for (int j = 0; j < 9; j++) {
-        int rX = i - 5;
-        int rY = j - 4;
+    for (int i = 0; i < col; i++) {
+      for (int j = 0; j < row; j++) {
+        float rX = i - ((col - 1) * 0.5);
+        float rY = j - ((row - 1) * 0.5);
         if (rY != 0 || !showSequence) {
           src.pushMatrix();
-          src.translate(rX * 100, rY * 100);
+          src.translate(rX * gw, rY * gh);
           // src.fill(255);
           // src.noStroke();
           src.noFill();
@@ -69,15 +77,14 @@ class Grid {
             src.fill(255);
             src.rect(0, 0, 90, 90);
             src.stroke(255, 0, 0);
-            // src.line(0, 0, -rX * 100, -rY * 100);
-            src.line(0, 0, 0, -rX * 100, -rY * 100, 0);
+            src.line(0, 0, 0, -rX * gw, -rY * gh, 0);
           }
 
           if (redLineAlpha > 0.1) {
             redLineAlpha = redLineAlpha * 0.9995;
             src.stroke(redLineAlpha, 0, 0);
             src.noFill();
-            src.rect(0, 0, 100, 100);
+            src.rect(0, 0, gw, gh);
           }
 
           src.textFont(font);
@@ -97,7 +104,7 @@ class Grid {
   }
   void drawScanLine(PGraphics src) {
     src.stroke(255, 0, 0);
-    src.line(frameCount % width, 0, frameCount % width, height);
+    src.line(frameCount % widthRender, 0, frameCount % widthRender, height);
   }
 }
 
@@ -135,7 +142,7 @@ String shiftStr(String in, int n) {
 
 void drawSingleText(String s, int x, int y) {
   pushMatrix();
-  translate(width / 2 + 100 * x, height / 2 + 100 * y);
+  translate(widthRender / 2 + 100 * x, height / 2 + 100 * y);
   textFont(font);
   textSize(16);
   textAlign(CENTER, CENTER);

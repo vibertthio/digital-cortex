@@ -16,7 +16,7 @@ void drawParticles(PGraphics src) {
     src.shader(particlesShader);
     src.pushMatrix();
     // src.background(0);
-    src.translate(width * 0.5, height * 0.5);
+    src.translate(widthRender * 0.5, heightRender * 0.5);
     // src.ambientLight(0, 0, 0);
     src.rotateY(alpha);
     // alpha += 0.005;
@@ -60,7 +60,7 @@ PShape createParticles(int nOfP) {
   s = createShape();
   s.beginShape(TRIANGLES);
 
-  float r = height * 0.3;
+  float r = heightRender * 0.3;
   float smooth = 0.2;
   for (int i = 0; i < nOfP; i++) {
     int j = 4 * i;
@@ -119,7 +119,7 @@ PShape createLines(int nOfL) {
   float smooth = 0.8;
   s = createShape();
   s.beginShape(QUADS);
-  float range = 1.2 * height;
+  float range = 1.2 * heightRender;
 
   for (int i = 0; i < nOfL; i++) {
     // float xpos1 = 0;
@@ -210,10 +210,10 @@ PShape createLines1(int nOfL) {
   float smooth = 0.8;
   s = createShape();
   s.beginShape(QUADS);
-  float range = 0.9 * height;
+  float range = 0.9 * heightRender;
 
   for (int i = 0; i < nOfL; i++) {
-    float r = height * 0.3;
+    float r = heightRender * 0.3;
     float theta = random(1) * PI * 2;
     float zpos = random(1) * 2 - 1;
     float rsin = sqrt(1 - zpos * zpos);
@@ -294,10 +294,10 @@ PShape createLines2(int nOfL) {
   float smooth = 0.8;
   s = createShape();
   s.beginShape(QUADS);
-  float range = 0.9 * height;
+  float range = 0.9 * heightRender;
 
   for (int i = 0; i < nOfL; i++) {
-    float r = height * 0.3;
+    float r = heightRender * 0.3;
     float dist = 0.2;
     float theta = random(1) * PI * 2;
     float zpos = random(1) * 2 - 1;
@@ -393,13 +393,13 @@ PShape createLines3(int nOfL) {
   float smooth = 0.8;
   s = createShape();
   s.beginShape(QUADS);
-  float range = 0.9 * height;
-  float r = height * 0.05;
+  float range = 0.9 * heightRender;
+  float r = heightRender * 0.05;
   float dist = 0.3;
 
   for (int i = 0; i < nOfL; i++) {
 
-    float xpos1 = random(-width, width);
+    float xpos1 = random(-widthRender, widthRender);
     float ypos1 = -range;
     float zpos1 = 0;
 
@@ -469,7 +469,7 @@ void drawLines(PGraphics src) {
   src.pushMatrix();
   src.shader(linesShader);
   // src.background(0);
-  src.translate(width * 0.5, height * 0.5);
+  src.translate(widthRender * 0.5, heightRender * 0.5);
   // src.ambientLight(0, 0, 0);
   // src.rotateZ(alpha);
   // src.rotateY(alpha);
@@ -487,7 +487,7 @@ void drawLines(PGraphics src, int index) {
   }
   src.pushMatrix();
   src.shader(linesShader);
-  src.translate(width * 0.5, height * 0.5);
+  src.translate(widthRender * 0.5, heightRender * 0.5);
 
   if (index == 2) {
     // alpha = random(0, 2 * PI);

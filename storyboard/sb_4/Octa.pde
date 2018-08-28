@@ -14,7 +14,7 @@ class Octa {
   Octa() {
     octaShader = loadShader("octahedron/frag.glsl", "octahedron/vert.glsl");
     octaShader.set("size", 0.2);
-    octa = createOctahedron(height * 0.2, 4);
+    octa = createOctahedron(heightRender * 0.2, 4);
     octaAlpha = 0;
     initLines();
   }
@@ -23,7 +23,7 @@ class Octa {
     src.shader(octaShader);
     src.pushMatrix();
     // src.background(0);
-    src.translate(width * 0.5, height * 0.5);
+    src.translate(widthRender * 0.5, heightRender * 0.5);
     // src.ambientLight(0, 0, 0);
     src.rotateY(octaAlpha);
     octaAlpha += 0.005;
@@ -89,7 +89,7 @@ class Octa {
     float rate = 0.01;
     float radius = 100;
     src.pushMatrix();
-    src.translate(width * 0.5, height * 0.5);
+    src.translate(widthRender * 0.5, heightRender * 0.5);
     src.stroke(255);
     // src.rotateY(frameCount * rate);
     // src.rotateZ(frameCount * rate);
@@ -124,7 +124,7 @@ class Octa {
     float rate = 0.01;
     float radius = 100;
     src.pushMatrix();
-    src.translate(width * 0.5, height * 0.5);
+    src.translate(widthRender * 0.5, heightRender * 0.5);
     src.stroke(255);
     // src.rotateY(frameCount * rate);
     // src.rotateZ(frameCount * rate);
@@ -159,7 +159,7 @@ class Octa {
     float rate = 0.01;
     float radius = 100;
     src.pushMatrix();
-    src.translate(width * 0.5, height * 0.5);
+    src.translate(widthRender * 0.5, heightRender * 0.5);
     src.stroke(255);
     src.rotateY(frameCount * rate);
     // src.rotateZ(frameCount * rate);
@@ -220,13 +220,13 @@ class Octa {
       int i = k % c;
       int j = k / c;
 
-      float x = (width / c) * (i + 0.5);
-      float y = (height / r) * (j + 0.5);
+      float x = (widthRender / c) * (i + 0.5);
+      float y = (heightRender / r) * (j + 0.5);
 
       src.noFill();
       src.stroke(255, 0, 0);
       src.rectMode(CENTER);
-      src.rect(x, y, width / c, height / r);
+      src.rect(x, y, widthRender / c, heightRender / r);
       draw(src, x, y, 0);
     }
   }
@@ -267,7 +267,7 @@ class OctaLine {
     float z = 0;
 
     src.pushMatrix();
-    src.translate(width * 0.5, height * 0.5);
+    src.translate(width * 0.5, heightRender * 0.5);
     src.stroke(255, 0, 0);
     src.rotateY(frameCount * rate + phase);
 

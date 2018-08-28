@@ -49,7 +49,7 @@ class GlowRect {
       src.background(0);
     }
     // src.lights();
-    src.translate(width / 2, height / 2);
+    src.translate(widthRender / 2, heightRender / 2);
     // src.rotateX(frameCount * 0.005f);
     src.rectMode(CENTER);
 
@@ -131,7 +131,7 @@ class GlowRect {
     src.noStroke();
     src.fill(255);
     // src.fill(255, 0, 0);
-    src.translate(width * 0.5 + rectWidth * 0.5 + dataGap, height * 0.5 - rectWidth * 0.5);
+    src.translate(widthRender * 0.5 + rectWidth * 0.5 + dataGap, heightRender * 0.5 - rectWidth * 0.5);
     src.rectMode(CORNER);
 
     if (!dataHold) {
@@ -161,7 +161,7 @@ class GlowRect {
 
 void drawText() {
   pushMatrix();
-  translate(width / 2, height / 2);
+  translate(widthRender / 2, heightRender / 2);
   textFont(font);
   textSize(14);
   textAlign(CENTER, CENTER);

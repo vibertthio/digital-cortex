@@ -1,6 +1,5 @@
 import oscP5.*;
 import netP5.*;
-import peasy.*;
 
 PGraphics src;
 
@@ -13,7 +12,7 @@ PFont font;
 float unit;
 float rectWidth;
 
-int mode = 4;
+int mode = 11;
 int pdControlPhase = 0;
 int[][] noiseChoice = {
   { 1, 2, 3 },
@@ -26,24 +25,58 @@ boolean colorReverse = false;
 OscP5 oscP5;
 NetAddress remoteLocation;
 
-PeasyCam cam;
-
 // Drawing Objects
 Plains plains;
 Octa octa;
 Grid grid;
 
+float widthRender;
+float heightRender;
+
+float xOff;
+float yOff;
+
 void setup() {
-  size(1080, 900, OPENGL);
+
+  // size(1080, 900, OPENGL);
+  // size(1210, 977, OPENGL);
   // size(540, 450, OPENGL);
   // size(960, 540, OPENGL);
   // size(1920, 1080, OPENGL);
-  // fullScreen(OPENGL);
+
+  // 1. debug full
+  size(1600, 1000, OPENGL);
+  widthRender = 1216;
+  heightRender = 1000;
+  xOff = 202;
+  yOff = 0;
+
+  // 2. debug small
+  size(1600, 1000, OPENGL);
+  widthRender = 1216;
+  heightRender = 1000;
+  xOff = 202;
+  yOff = 0;
+
+  // 3. live
+  // fullScreen(OPENGL, SPAN);
+  // widthRender = 1216;
+  // heightRender = 1000;
+  // xOff = 202;
+  // yOff = 0;
+
   smooth(8);
-  unit = height / 12;
+
+  // widthRender = 1210;
+  // heightRender = 998;
+  // xOff = 205;
+  // yOff = 0;
+
+
+  unit = heightRender / 12;
   rectWidth = unit * 3 ;
 
-  src = createGraphics(width, height, P3D);
+  src = createGraphics(int(widthRender), int(heightRender), P3D);
   initGlow();
   font = createFont("fonts/TickingTimebombBB.ttf", 24);
   rec = new GlowRect();
@@ -62,7 +95,10 @@ void setup() {
 }
 
 void draw() {
+  // println(mouseX);
+  // println(mouseY);
   showFrameRate();
+  translate(xOff, yOff);
   src.beginDraw();
 
   if (mode == 0) {
@@ -127,6 +163,9 @@ void draw() {
   blink(src);
   src.endDraw();
   PGraphics graphics = glowManager.dowGlow(src);
+  // image(graphics, 0, 0);
+  background(0);
+  margin();
   image(graphics, 0, 0);
 
 
@@ -146,9 +185,9 @@ void drawMask() {
     fill(0);
     noStroke();
     if (maskLeft) {
-      rect(0, 0, width * 0.5, height);
+      rect(0, 0, widthRender * 0.5, heightRender);
     } else {
-      rect(width * 0.5, 0, width * 0.5, height);
+      rect(widthRender * 0.5, 0, widthRender * 0.5, heightRender);
     }
   }
 }
@@ -434,4 +473,11 @@ void tryConnect() {
   OscMessage msg = new OscMessage("/connect");
   msg.add(1);
   oscP5.send(msg, remoteLocation);
+}
+void margin() {
+  stroke(255, 0, 0);
+  line(0, 0, 0, heightRender);
+  line(0, 0, widthRender, 0);
+  line(0, heightRender, widthRender, heightRender);
+  line(widthRender, 0, widthRender, heightRender);
 }

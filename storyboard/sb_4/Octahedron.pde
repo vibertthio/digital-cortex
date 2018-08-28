@@ -1,80 +1,3 @@
-// PShape octa;
-// PShader octaShader;
-// float octaAlpha;
-// boolean octaMerging = true;
-// float octaTimeOffset = 0;
-// float octaTime = 0;
-// float octaTimeUnit = 1500;
-//
-// // time: 5000
-//
-// void initOctahedron() {
-//   octaShader = loadShader("octahedron/frag.glsl", "octahedron/vert.glsl");
-//   octaShader.set("size", 0.2);
-//   octa = createOctahedron(height * 0.2, 4);
-//   // octa = createOctahedron(height * 0.1, 4);
-//   octaAlpha = 0;
-// }
-// void drawOctahedron(PGraphics src) {
-//   updateOctaShader();
-//   src.shader(octaShader);
-//   src.pushMatrix();
-//   // src.background(0);
-//   src.translate(width * 0.5, height * 0.5);
-//   // src.ambientLight(0, 0, 0);
-//   src.rotateY(octaAlpha);
-//   octaAlpha += 0.005;
-//   src.shape(octa);
-//   src.resetShader();
-//   src.popMatrix();
-// }
-// void drawOctahedron(PGraphics src, float _x, float _y, float _z) {
-//   updateOctaShader();
-//   src.shader(octaShader);
-//   src.pushMatrix();
-//   // src.background(0);
-//   src.translate(width * (0.5 + _x), height * (0.5 + _y), 200 * _z);
-//   // src.ambientLight(0, 0, 0);
-//   src.rotateY(octaAlpha);
-//   octaAlpha += 0.005;
-//   src.shape(octa);
-//   src.resetShader();
-//   src.popMatrix();
-// }
-// void updateOctaShader() {
-//   if (octaMerging) {
-//     octaShader.set("uTime", (millis() - octaTime) / octaTimeUnit);
-//   } else {
-//     octaShader.set("uTime", (octaTimeOffset - (millis() - octaTime)) / octaTimeUnit);
-//   }
-// }
-// void resetOctaShader() {
-//   if (octaMerging) {
-//     octaTime = millis();
-//   }
-// }
-// void reverseOcta() {
-//   octaMerging = !octaMerging;
-//   if (octaMerging) {
-//     float now = octaTimeOffset - (millis() - octaTime);
-//     if (now > 0) {
-//       octaTime = millis() - now;
-//     } else {
-//       octaTime = millis();
-//     }
-//   } else {
-//     octaTimeOffset = millis() - octaTime;
-//     octaTime = millis();
-//
-//     if (octaTimeOffset > 5000) {
-//       octaTimeOffset = 5000;
-//     }
-//   }
-// }
-// void changeSize() {
-//   octaShader.set("size", random(0.1, 1.5));
-// }
-
 PShape createOctahedron(float radius, int levels) {
   PVector points[];
   PVector lightV=new PVector(-1, 0, 1);
@@ -217,7 +140,7 @@ void drawIndexLines(PGraphics src) {
   float rate = 0.01;
   float radius = 100;
   src.pushMatrix();
-  src.translate(width * 0.5, height * 0.5);
+  src.translate(widthRender * 0.5, heightRender * 0.5);
   src.stroke(255);
   // src.rotateY(frameCount * rate);
   // src.rotateZ(frameCount * rate);
@@ -252,7 +175,7 @@ void drawIndexLines1(PGraphics src) {
   float rate = 0.01;
   float radius = 100;
   src.pushMatrix();
-  src.translate(width * 0.5, height * 0.5);
+  src.translate(widthRender * 0.5, heightRender * 0.5);
   src.stroke(255);
   // src.rotateY(frameCount * rate);
   // src.rotateZ(frameCount * rate);
@@ -287,7 +210,7 @@ void drawIndexLines2(PGraphics src, String txt, float _x, float _y, float _z, fl
   float rate = 0.01;
   float radius = 100;
   src.pushMatrix();
-  src.translate(width * 0.5, height * 0.5);
+  src.translate(widthRender * 0.5, height * 0.5);
   src.stroke(255);
   // src.rotateY(frameCount * rate);
   // src.rotateZ(frameCount * rate);

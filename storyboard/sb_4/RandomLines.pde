@@ -1,7 +1,7 @@
 void randomHorizontalLines(PGraphics src) {
   src.background(0);
   src.stroke(255);
-  src.translate(width * 0.5 - rectWidth * 0.5, height * 0.5 - rectWidth * 0.5);
+  src.translate(widthRender * 0.5 - rectWidth * 0.5, heightRender * 0.5 - rectWidth * 0.5);
 
   float pos = 0;
   while(pos < rectWidth) {
@@ -22,7 +22,7 @@ void randomVerticalLines(PGraphics src) {
   src.pushMatrix();
   src.background(0);
   src.stroke(255);
-  src.translate(width * 0.5 - rectWidth * 0.5, height * 0.5 - rectWidth * 0.5);
+  src.translate(widthRender * 0.5 - rectWidth * 0.5, heightRender * 0.5 - rectWidth * 0.5);
 
   float pos = 0;
   float h = random(0, rectWidth * 0.05);
@@ -45,7 +45,7 @@ void randomDots(PGraphics src) {
 
   src.background(0);
   src.stroke(255);
-  src.translate(width * 0.5 - rectWidth * 0.5, height * 0.5 - rectWidth * 0.5);
+  src.translate(widthRender * 0.5 - rectWidth * 0.5, heightRender * 0.5 - rectWidth * 0.5);
 
   for (int i = 0; i < 300; i++) {
     src.line(random(rectWidth), random(rectWidth), random(rectWidth), random(rectWidth));
@@ -59,7 +59,7 @@ void blink(PGraphics src) {
     src.pushMatrix();
     src.fill(255);
     src.rectMode(CORNER);
-    src.rect(0, 0, width, height);
+    src.rect(0, 0, widthRender, heightRender);
     src.popMatrix();
     blinkCount--;
   }
