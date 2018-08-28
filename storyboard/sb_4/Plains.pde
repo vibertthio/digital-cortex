@@ -9,6 +9,7 @@ class Plains {
 
   float boxWidth = 800;
   float boxHeight = 666;
+  // float boxDepth = 1500;
   float boxDepth = 800;
 
   color lineColor = color(255, 0, 0);
@@ -61,7 +62,7 @@ class Plains {
       // monitorGrid[id] = !monitorGrid[id];
     }
 
-    flash();
+    // flash();
 
     scanShift();
     plainShifting();
@@ -80,8 +81,8 @@ class Plains {
     if (!horizontalFaces[0]) {
       if (random(1) < 0.05) {
         horizontalFaces[0] = true;
-        shiftRightIndex = floor(random(0, 10));
-        shiftLeftIndex = floor(random(0, 10));
+        // shiftRightIndex = floor(random(0, 10));
+        // shiftLeftIndex = floor(random(0, 10));
         // changeDepth(random(1));
       }
     } else {
@@ -161,9 +162,7 @@ class Plains {
 
     // src.scale(0.8, 0.8, 0.8);
     // drawParticles(src, 0, 0);
-    drawFaceHorizontal(src, 1);
-    drawFaceHorizontal(src, 2);
-    drawFaceHorizontal(src, 3);
+
     src.popMatrix();
   }
   void drawGrid(PGraphics src) {
@@ -176,9 +175,12 @@ class Plains {
     for (int i = 0; i < 4; i++) {
       if (horizontalFaces[i]) {
         // drawFaceHorizontal(src, i);
+
       }
     }
     // drawFaceVertical(src, 1, groundColor);
+
+    drawFaceHorizontal(src, floor(frameCount / 6) % 4);
 
     src.popMatrix();
   }
@@ -269,8 +271,8 @@ class Plains {
     src.rotateX(0.5 * PI);
 
     float shift = longitude / 10;
-    // float rotationZ = 0.2 * PI * sin(frameCount * 0.01);
-    float rotationZ = 0.2 * PI * sin(frameCount * 0.03);
+    float rotationZ = floor(frameCount * 0.2) * 0.2;
+    // float rotationZ = 0.2 * PI * sin(frameCount * 0.03);
     src.translate(0, 0, shift * 0.5);
 
     for (int i = 0; i < 10; i++) {
@@ -317,12 +319,13 @@ class Plains {
           src.text(boxStr, 0, 0);
           src.popMatrix();
         }
-      }else {
+      } else {
         // src.rotateZ(frameCount * 0.02);
         src.fill(255);
       }
 
-      src.rotateZ(rotationZ + (i - 5) * 0.1 * sin(frameCount * 0.03));
+      // src.rotateZ(rotationZ + (i - 5) * 0.1 * sin(frameCount * 0.03));
+      src.rotateZ(rotationZ);
       src.fill(255);
       src.noStroke();
       src.rect(0, 0, 150, 150);

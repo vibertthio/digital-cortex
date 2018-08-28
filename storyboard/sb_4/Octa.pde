@@ -8,9 +8,6 @@ class Octa {
   float octaTimeUnit = 1500;
   float scale = 1.0;
 
-  OctaLine[] lines;
-  int nOFLines = 15;
-
   Octa() {
     octaShader = loadShader("octahedron/frag.glsl", "octahedron/vert.glsl");
     octaShader.set("size", 0.2);
@@ -83,6 +80,44 @@ class Octa {
   }
   void changeSize(float s) {
     octaShader.set("size", s);
+  }
+
+
+  OctaLine[] lines;
+  int nOfLines = 30;
+  int nOfLinesShow = 0;
+  int highlightedIndex = 0;
+
+  void initLines() {
+    lines = new OctaLine[nOfLines];
+    for (int i = 0; i < nOfLines; i++) {
+      lines[i] = new OctaLine(
+        "-$" + newWord() + newWord(),
+        random(widthRender * 0.1, widthRender * 0.3),
+        random(widthRender * -0.2, widthRender * 0.2),
+        0
+      );
+    }
+  }
+  void drawLines(PGraphics src) {
+    highlightLines();
+    for (int i = 0; i < min(nOfLinesShow, nOfLines); i++) {
+      if (i != highlightedIndex) {
+        lines[i].draw(src);
+      } else {
+        lines[i].draw(src, true);
+      }
+    }
+  }
+  void highlightLines() {
+    if (random(1) < 0.01) {
+      highlightedIndex += 1;
+      if (highlightedIndex > min(nOfLinesShow, nOfLines) - 1) {
+        highlightedIndex = 0;
+      }
+    } else {
+      lines[highlightedIndex].update();
+    }
   }
 
   void drawIndexLines(PGraphics src) {
@@ -198,18 +233,6 @@ class Octa {
 
   }
 
-  void initLines() {
-    lines = new OctaLine[nOFLines];
-    for (int i = 0; i < nOFLines; i++) {
-      lines[i] = new OctaLine();
-    }
-  }
-  void drawLines(PGraphics src) {
-    for (int i = 0; i < nOFLines; i++) {
-      lines[i].draw(src);
-    }
-  }
-
   int arrayCol = 7;
   int arrayRow = 6;
   int arrayNumber = 0;
@@ -235,21 +258,32 @@ class Octa {
 
 
 class OctaLine {
-  float radius = 300;
-  float alpha = random(-PI * 0.8, PI * 0.8);
+  float radius = 100;
   float xpos;
   float ypos;
   float zpos;
-  float phase = random(-PI, PI);
+  float phase;
+  float phaseDrift;
   float rate = 0.01;
+  float alpha = random(-PI * 0.8, PI * 0.8);
+
+  String str;
 
   // 0: extending
   // 1: floating
   // 2: shrinking
   int mode;
 
-  OctaLine() {
+  OctaLine(String _s, float _x, float _y, float _z) {
+    str = _s;
+    xpos = _x;
+    ypos = _y;
+    zpos = _z;
 
+    phase = random(0, 2 * PI);
+    phaseDrift = random(0, 2 * PI);
+
+    rate = random(0.002, 0.005);
   }
 
   void render(PGraphics src) {
@@ -258,26 +292,51 @@ class OctaLine {
   }
 
   void update() {
-
+    float rand = random(1);
+    if (rand > 0.9) {
+      str += newWord();
+    } else if (rand > 0.85) {
+      if (str.length() > 2) {
+        str = str.substring(0, str.length() - 1);
+      }
+    } else if (rand > 0.8) {
+      str = "-$";
+    }
   }
 
   void draw(PGraphics src) {
-    float x = radius * cos(alpha + 0.1 * PI * cos(frameCount * rate));
-    float y = radius * sin(alpha + 0.1 * PI * cos(frameCount * rate));
-    float z = 0;
-
+    draw(src, false);
+  }
+  void draw(PGraphics src, boolean highlighted) {
     src.pushMatrix();
-    src.translate(width * 0.5, heightRender * 0.5);
-    src.stroke(255, 0, 0);
-    src.rotateY(frameCount * rate + phase);
+    src.translate(widthRender * 0.5, heightRender * 0.5);
+    if (highlighted) {
+      src.stroke(255, 0, 0);
+    } else {
+      src.stroke(255);
+    }
+    src.rotateY(rate * frameCount + phase);
+    // src.rotateZ(frameCount * rate);
+    float x = xpos + unit * 0.3 * cos(frameCount * rate + phaseDrift);
+    float y = ypos + unit * 0.3 * sin(frameCount * rate + phaseDrift);
+    float z = zpos;
 
     src.line(0, 0, 0, x, y, z);
     src.translate(x, y, z);
-    // src.fill(255);
-    // src.noStroke();
-    src.line(0, 0, 0, 40 * abs(x)/x, 0, 0);
-    src.popMatrix();
+    src.line(0, 0, 0, 50, 0, 0);
+    src.translate(53, 0, 0);
+    src.textAlign(LEFT, CENTER);
 
+    src.textFont(font);
+    src.textSize(10);
+    if (highlighted) {
+      src.fill(255, 0, 0);
+    } else {
+      src.fill(255);
+    }
+    src.text(str, 0, 0);
+
+    src.popMatrix();
   }
 
 }

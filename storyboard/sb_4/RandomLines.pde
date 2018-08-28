@@ -52,15 +52,3 @@ void randomDots(PGraphics src) {
   }
   src.popMatrix();
 }
-
-int blinkCount = 0;
-void blink(PGraphics src) {
-  if (blinkCount > 0) {
-    src.pushMatrix();
-    src.fill(255);
-    src.rectMode(CORNER);
-    src.rect(0, 0, widthRender, heightRender);
-    src.popMatrix();
-    blinkCount--;
-  }
-}

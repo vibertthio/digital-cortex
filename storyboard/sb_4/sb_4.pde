@@ -12,7 +12,7 @@ PFont font;
 float unit;
 float rectWidth;
 
-int mode = 11;
+int mode = 14;
 int pdControlPhase = 0;
 int[][] noiseChoice = {
   { 1, 2, 3 },
@@ -52,11 +52,11 @@ void setup() {
   yOff = 0;
 
   // 2. debug small
-  size(1600, 1000, OPENGL);
-  widthRender = 1216;
-  heightRender = 1000;
-  xOff = 202;
-  yOff = 0;
+  // size(608, 500, OPENGL);
+  // widthRender = 608;
+  // heightRender = 500;
+  // xOff = 0;
+  // yOff = 0;
 
   // 3. live
   // fullScreen(OPENGL, SPAN);
@@ -95,8 +95,6 @@ void setup() {
 }
 
 void draw() {
-  // println(mouseX);
-  // println(mouseY);
   showFrameRate();
   translate(xOff, yOff);
   src.beginDraw();
@@ -158,6 +156,11 @@ void draw() {
     src.background(0);
     grid.draw(src);
     octa.draw(src);
+
+    // octa.drawIndexLines2(src, "vertical", widthRender * -0.1, widthRender * -0.2, widthRender * -0.1, PI);
+    // octa.drawIndexLines2(src, "shinyi", widthRender * -0.15, widthRender * 0.15, 0, 0.5 * PI);
+    // octa.drawIndexLines2(src, "vibert", widthRender * 0.05, widthRender * 0.1, 0, 0.1 * PI);
+    octa.drawLines(src);
   }
 
   blink(src);
@@ -292,6 +295,7 @@ void reset() {
 }
 
 boolean dongStarted = false;
+int bapCount = 0;
 void oscEvent(OscMessage msg) {
   // print("### received an osc message.");
   // println(" osc: " + msg.addrPattern());
@@ -450,6 +454,40 @@ void oscEvent(OscMessage msg) {
         mode = 14;
         blinkCount = 1;
         grid.redLineAlpha = 400;
+      }
+    }
+  } else if (msg.checkAddrPattern("/bi")) {
+    if (msg.checkTypetag("i")) {
+      octa.nOfLinesShow += 1;
+    }
+  } else if (msg.checkAddrPattern("/bap")) {
+    if (msg.checkTypetag("i")) {
+      int value = msg.get(0).intValue();
+      blinkRed(1);
+      if (value == 1) {
+        if (octa.nOfLinesShow > octa.nOfLines) {
+          octa.nOfLinesShow = 0;
+          if (bapCount == 0) {
+            grid.showSequence = true;
+          } else if (bapCount == 1) {
+            grid.showSequence = false;
+            grid.showScanning = true;
+          } else if (bapCount == 2) {
+            grid.showSequence = true;
+            grid.showScanning = true;
+            grid.showNavigate = true;
+            octa.nOfLinesShow = 6;
+          } else if (bapCount == 3) {
+            grid.showSequence = false;
+            grid.showScanning = false;
+            grid.showNavigate = false;
+            octa.nOfLinesShow = 0;
+            octa.reverse();
+          }
+          bapCount += 1;
+        }
+      } else if (value == 2) {
+        mode = 11;
       }
     }
   }
