@@ -100,7 +100,7 @@ class GlowRect {
 
   // utilities
   void startFadeIn() {
-    pow = 8;
+    pow = 0.8;
     startTimer.startTimer();
   }
   void startFadeIn(int ll) {

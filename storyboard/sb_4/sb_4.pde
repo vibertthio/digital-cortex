@@ -12,7 +12,7 @@ PFont font;
 float unit;
 float rectWidth;
 
-int mode = 14;
+int mode = 0;
 int pdControlPhase = 0;
 int[][] noiseChoice = {
   { 1, 2, 3 },
@@ -296,6 +296,15 @@ void reset() {
   mode = 0;
   rec.alpha = 0;
   rec.fill = false;
+  rec.showingDataPoints = false;
+  boxStr = "-$";
+
+  bapCount = 0;
+
+  plains.alligning = true;
+  plains.longitude = 0;
+  plains.scanVerticalDir = false;
+  plains.scanHeight = 0;
 }
 
 boolean dongStarted = false;
@@ -419,6 +428,8 @@ void oscEvent(OscMessage msg) {
         rec.fill = true;
         rec.startFadeIn(4000);
         updateText("-$vibert thio");
+      } else if (value == 8) {
+        reset();
       }
     }
   } else if (msg.checkAddrPattern("/dong")) {
@@ -505,6 +516,22 @@ void oscEvent(OscMessage msg) {
       } else if (value == 4) {
         blinkSwitching = false;
         mode = 11;
+      }
+    }
+  } else if (msg.checkAddrPattern("/kick")) {
+    if (msg.checkTypetag("i")) {
+      plains.bangBass();
+    }
+  } else if (msg.checkAddrPattern("/beat")) {
+    if (msg.checkTypetag("i")) {
+      int value = msg.get(0).intValue();
+      if (value == 0) {
+        plains.finalLongitude = plains.normalLongitude;
+        plains.startScanning();
+
+      }
+      if (value % 4 == 0) {
+        plains.alligning = !plains.alligning;
       }
     }
   }

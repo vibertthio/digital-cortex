@@ -56,7 +56,6 @@ class Plains {
     finalLongitude = 0;
   }
 
-
   void update() {
     // dimGroundColor();
     if (random(1) < 0.2) {
@@ -415,7 +414,7 @@ class Plains {
     dimGroundColor();
     drawFaceVertical(src, 1, groundColor);
     drawFaceVertical(src, 3, groundColor);
-    // drawFaceVertical(src, 2);
+    // drawFaceVertical(src, 2, groundColor);
 
     drawFaceHorizontal(src, 1, groundColor);
     drawFaceHorizontal(src, 3, groundColor);
