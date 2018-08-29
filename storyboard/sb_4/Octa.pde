@@ -4,13 +4,15 @@ class Octa {
   float octaAlpha;
   boolean octaMerging = true;
   float octaTimeOffset = 0;
+  float octaTimeShift = 0;
   float octaTime = 0;
   float octaTimeUnit = 1500;
   float scale = 1.0;
+  float size = 0.2;
 
   Octa() {
     octaShader = loadShader("octahedron/frag.glsl", "octahedron/vert.glsl");
-    octaShader.set("size", 0.2);
+    octaShader.set("size", size);
     octa = createOctahedron(heightRender * 0.2, 4);
     octaAlpha = 0;
     initLines();
@@ -48,16 +50,18 @@ class Octa {
   void update() {
     if (octaMerging) {
       // println((millis() - octaTime) / octaTimeUnit);
-      octaShader.set("uTime", (millis() - octaTime) / octaTimeUnit);
+      octaShader.set("uTime", (millis() - octaTime + octaTimeShift) / octaTimeUnit);
     } else {
       octaShader.set("uTime", (octaTimeOffset - (millis() - octaTime)) / octaTimeUnit);
     }
   }
   void reset() {
     octaTime = millis();
+    octaTimeShift = 0;
   }
   void reverse() {
     octaMerging = !octaMerging;
+    octaTimeShift = 0;
     if (octaMerging) {
       float now = octaTimeOffset - (millis() - octaTime);
       if (now > 0) {
@@ -76,9 +80,11 @@ class Octa {
   }
 
   void changeSize() {
-    octaShader.set("size", random(0.1, 1.5));
+    size = random(0.1, 1.5);
+    octaShader.set("size", size);
   }
   void changeSize(float s) {
+    size = s;
     octaShader.set("size", s);
   }
 

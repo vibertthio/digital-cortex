@@ -145,6 +145,8 @@ void draw() {
   } else if (mode == 12) {
     src.background(0);
     octa.draw(src);
+    octa.drawLines(src);
+
   } else if (mode == 13) {
 
     // array octa
@@ -156,11 +158,11 @@ void draw() {
     src.background(0);
     grid.draw(src);
     octa.draw(src);
+    octa.drawLines(src);
 
     // octa.drawIndexLines2(src, "vertical", widthRender * -0.1, widthRender * -0.2, widthRender * -0.1, PI);
     // octa.drawIndexLines2(src, "shinyi", widthRender * -0.15, widthRender * 0.15, 0, 0.5 * PI);
     // octa.drawIndexLines2(src, "vibert", widthRender * 0.05, widthRender * 0.1, 0, 0.1 * PI);
-    octa.drawLines(src);
   }
 
   blink(src);
@@ -177,7 +179,6 @@ void draw() {
   } else if (mode == 5 || mode == 4) {
     drawMask();
   }
-
 
 }
 
@@ -285,6 +286,9 @@ void keyPressed() {
   if (key == 'c') {
     reverseMask();
   }
+  if (key == 'v') {
+    plains.bangBass();
+  }
 
 }
 
@@ -391,7 +395,9 @@ void oscEvent(OscMessage msg) {
       } else if (value == 5) {
         pdControlPhase = 5;
         mode = 12;
-        octa.changeSize(1.2);
+        // octa.changeSize(1.2);
+        octa.changeSize(0.9);
+        octa.nOfLinesShow = 6;
         octa.scale = 1.0;
         blinkCount = 1;
       } else if (value == 6) {
@@ -399,16 +405,18 @@ void oscEvent(OscMessage msg) {
         pdControlPhase = 6;
         mode = 14;
         octa.scale = 1.0;
+        octa.nOfLinesShow = 0;
         octa.changeSize(0.3);
         println("phase 6");
 
         octa.octaMerging = true;
         octa.reset();
 
-      } else if (value == 20) {
-        pdControlPhase = 20;
+      } else if (value == 7) {
+        pdControlPhase = 7;
         mode = 0;
         rec.showingDataPoints = false;
+        rec.fill = true;
         rec.startFadeIn(4000);
         updateText("-$vibert thio");
       }
@@ -459,6 +467,7 @@ void oscEvent(OscMessage msg) {
   } else if (msg.checkAddrPattern("/bi")) {
     if (msg.checkTypetag("i")) {
       octa.nOfLinesShow += 1;
+      octa.octaTimeShift += 1000;
     }
   } else if (msg.checkAddrPattern("/bap")) {
     if (msg.checkTypetag("i")) {
@@ -466,6 +475,7 @@ void oscEvent(OscMessage msg) {
       blinkRed(1);
       if (value == 1) {
         if (octa.nOfLinesShow > octa.nOfLines) {
+          octa.changeSize(octa.size + 0.1);
           octa.nOfLinesShow = 0;
           if (bapCount == 0) {
             grid.showSequence = true;
@@ -475,18 +485,25 @@ void oscEvent(OscMessage msg) {
           } else if (bapCount == 2) {
             grid.showSequence = true;
             grid.showScanning = true;
-            grid.showNavigate = true;
+            grid.nOfNpsShowing = 3;
             octa.nOfLinesShow = 6;
           } else if (bapCount == 3) {
             grid.showSequence = false;
             grid.showScanning = false;
-            grid.showNavigate = false;
-            octa.nOfLinesShow = 0;
-            octa.reverse();
+            grid.nOfNpsShowing = 0;
           }
           bapCount += 1;
         }
       } else if (value == 2) {
+        grid.showSequence = false;
+        grid.showScanning = false;
+        grid.nOfNpsShowing = 0;
+        octa.nOfLinesShow = 0;
+        octa.reverse();
+      } else if (value == 3) {
+        blinkSwitching = true;
+      } else if (value == 4) {
+        blinkSwitching = false;
         mode = 11;
       }
     }

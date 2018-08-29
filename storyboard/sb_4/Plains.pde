@@ -15,6 +15,7 @@ class Plains {
   color lineColor = color(255, 0, 0);
   // color lineColor = color(255, 255, 255);
   color groundColor = color(0, 0, 0);
+  float groundColorEffect = 0;
   boolean[] horizontalFaces = { false, false, false, false };
   int shiftRightIndex = 2;
   int shiftLeftIndex = 8;
@@ -33,7 +34,7 @@ class Plains {
   float scanDepth = 50;
 
   boolean plainShifting = true;
-  boolean alligning = false;
+  boolean alligning = true;
   float plainShift = 150;
 
   Plains() {
@@ -50,6 +51,9 @@ class Plains {
 
     boxWidth = 934;
     boxHeight = 768;
+
+    longitude = 0;
+    finalLongitude = 0;
   }
 
 
@@ -97,8 +101,9 @@ class Plains {
     boxDepth = map(d, -200, -400, 800, 1200);
   }
   void dimGroundColor() {
-    float dim = (sin(frameCount * 0.04 + 0.5 * PI) + 1) * 0.5;
-    groundColor = lerpColor(color(0, 0, 0), color(100, 0, 0), dim);
+    // float dim = (sin(frameCount * 0.04 + 0.5 * PI) + 1) * 0.5;
+    groundColorEffect *= 0.9;
+    groundColor = lerpColor(color(0, 0, 0), color(200, 0, 0), groundColorEffect);
   }
   void scanShift() {
     if (scanningVertical) {
@@ -163,6 +168,7 @@ class Plains {
     // src.scale(0.8, 0.8, 0.8);
     // drawParticles(src, 0, 0);
 
+    drawBass(src);
     src.popMatrix();
   }
   void drawGrid(PGraphics src) {
@@ -180,7 +186,7 @@ class Plains {
     }
     // drawFaceVertical(src, 1, groundColor);
 
-    drawFaceHorizontal(src, floor(frameCount / 6) % 4);
+    // drawFaceHorizontal(src, floor(frameCount / 6) % 4);
 
     src.popMatrix();
   }
@@ -253,7 +259,7 @@ class Plains {
       case 3:
         src.pushMatrix();
         src.translate(0, boxHeight * -0.5, 0);
-        src.rotateY(PI * 0.5);
+        src.rotateX(PI * 0.5);
         src.rect(0, 0, boxWidth, boxDepth);
         src.popMatrix();
         break;
@@ -271,7 +277,7 @@ class Plains {
     src.rotateX(0.5 * PI);
 
     float shift = longitude / 10;
-    float rotationZ = floor(frameCount * 0.2) * 0.2;
+    float rotationZ = floor(frameCount * 0.2) * 0.4;
     // float rotationZ = 0.2 * PI * sin(frameCount * 0.03);
     src.translate(0, 0, shift * 0.5);
 
@@ -404,6 +410,18 @@ class Plains {
 
     src.popStyle();
     src.popMatrix();
+  }
+  void drawBass(PGraphics src) {
+    dimGroundColor();
+    drawFaceVertical(src, 1, groundColor);
+    drawFaceVertical(src, 3, groundColor);
+    // drawFaceVertical(src, 2);
+
+    drawFaceHorizontal(src, 1, groundColor);
+    drawFaceHorizontal(src, 3, groundColor);
+  }
+  void bangBass() {
+    groundColorEffect = 1.0;
   }
 
   void drawMonitor(PGraphics src) {

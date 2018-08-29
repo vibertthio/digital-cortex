@@ -2,7 +2,6 @@ String randStr = newStr(200, 1);
 
 class Grid {
   boolean showSequence = false;
-  boolean showNavigate = false;
   boolean showScanning = false;
 
   float redLineAlpha = 255;
@@ -13,12 +12,33 @@ class Grid {
   float gw;
   float gh;
 
-  int pointX = 0;
-  int pointY = 0;
-
+  NavigatePoint[] nps;
+  int nOfNps = 3;
+  int nOfNpsShowing = 0;
   Grid() {
     gw = widthRender / col;
     gh = heightRender / row;
+    initNavigatePoints();
+  }
+  void initNavigatePoints() {
+    nps = new NavigatePoint[nOfNps];
+    for (int i = 0; i < nOfNps; i++) {
+      nps[i] = new NavigatePoint(floor(random(0, col)), floor(random(0, row)));
+    }
+  }
+  void drawNavigatePoints(PGraphics src) {
+    for (int i = 0; i < nOfNpsShowing; i++) {
+      float rX = (nps[i].pointX - ((col - 1) * 0.5)) * gw;
+      float rY = (nps[i].pointY - ((row - 1) * 0.5)) * gh;
+      src.pushMatrix();
+      src.fill(255);
+      src.rect(rX, rY, 0.5 * unit, 0.5 * unit);
+      src.stroke(255, 0, 0);
+      src.line(0, 0, 0, rX, rY, 0);
+      src.popMatrix();
+
+      nps[i].update();
+    }
   }
   void draw(PGraphics src) {
     if (random(0, 1) < 0.3) {
@@ -44,24 +64,6 @@ class Grid {
     src.fill(0);
     src.stroke(255);
     src.rectMode(CENTER);
-    // src.rect(0, 0, 90, 90);
-
-    float rand = random(0, 10);
-    if (rand < 1) {
-      if (pointX < 10) {
-        pointX++;
-      } else {
-        pointX = 0;
-        if (pointY < 8) {
-          pointY++;
-        } else {
-          pointY = 0;
-        }
-      }
-    } else if (rand < 1.2) {
-      pointX = int(random(0, 11));
-      pointY = int(random(0, 9));
-    }
 
     for (int i = 0; i < col; i++) {
       for (int j = 0; j < row; j++) {
@@ -70,15 +72,6 @@ class Grid {
         if (rY != 0 || !showSequence) {
           src.pushMatrix();
           src.translate(rX * gw, rY * gh);
-          // src.fill(255);
-          // src.noStroke();
-          src.noFill();
-          if (showNavigate && pointX == i && pointY == j) {
-            src.fill(255);
-            src.rect(0, 0, 90, 90);
-            src.stroke(255, 0, 0);
-            src.line(0, 0, 0, -rX * gw, -rY * gh, 0);
-          }
 
           if (redLineAlpha > 0.1) {
             redLineAlpha = redLineAlpha * 0.9995;
@@ -98,13 +91,46 @@ class Grid {
       }
 
     }
-    src.popMatrix();
 
+    drawNavigatePoints(src);
+    src.popMatrix();
 
   }
   void drawScanLine(PGraphics src) {
     src.stroke(255, 0, 0);
     src.line(frameCount % widthRender, 0, frameCount % widthRender, height);
+  }
+}
+
+class NavigatePoint {
+
+  int pointX;
+  int pointY;
+  int col = 11;
+  int row = 9;
+
+  NavigatePoint(int x, int y) {
+    pointX = x;
+    pointY = y;
+  }
+
+  void update() {
+    float rand = random(0, 10);
+    if (rand < 1) {
+      if (pointX < 10) {
+        pointX++;
+      } else {
+        pointX = 0;
+        if (pointY < 8) {
+          pointY++;
+        } else {
+          pointY = 0;
+        }
+      }
+    } else if (rand < 1.2) {
+      pointX = int(random(0, col));
+      pointY = int(random(0, row));
+    }
   }
 }
 

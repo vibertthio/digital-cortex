@@ -1,5 +1,7 @@
 int blinkCount = 0;
 boolean blinkRed = false;
+boolean blinkSwitching = false;
+int lastMode;
 void blink(int c) {
   blinkCount = c;
 }
@@ -18,6 +20,17 @@ void blink(PGraphics src) {
     src.rectMode(CORNER);
     src.rect(0, 0, widthRender, heightRender);
     src.popMatrix();
+
+    if (blinkRed && blinkSwitching) {
+      // drawLines(src, 1);
+      if (mode != 7) {
+        lastMode = mode;
+        mode = 7;
+      } else {
+        mode = lastMode;
+      }
+    }
+
     blinkCount--;
     if (blinkCount == 0) {
       blinkRed = false;
