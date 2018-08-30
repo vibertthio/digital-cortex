@@ -32,6 +32,13 @@ class GlowRect {
     return glowManager.dowGlow(src);
   }
 
+  void reset() {
+    alpha = 0;
+    fill = false;
+    noise = false;
+    showingDataPoints = false;
+    startTimer.limit = 10000;
+  }
   void draw(PGraphics src) {
     update();
     render(src);

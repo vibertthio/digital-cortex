@@ -109,7 +109,7 @@ PShader linesShader;
 void initLines() {
   lines = new PShape[4];
   lines[0] = createLines(1000);
-  lines[1] = createLines1(1000);
+  lines[1] = createLines1(1500);
   lines[2] = createLines2(4000);
   lines[3] = createLines3(2000);
   linesShader = loadShader("lines/frag.glsl", "lines/vert.glsl");
@@ -210,10 +210,10 @@ PShape createLines1(int nOfL) {
   float smooth = 0.8;
   s = createShape();
   s.beginShape(QUADS);
-  float range = 0.9 * heightRender;
+  float range = 0.7 * heightRender;
 
   for (int i = 0; i < nOfL; i++) {
-    float r = heightRender * 0.3;
+    float r = heightRender * 0.25;
     float theta = random(1) * PI * 2;
     float zpos = random(1) * 2 - 1;
     float rsin = sqrt(1 - zpos * zpos);

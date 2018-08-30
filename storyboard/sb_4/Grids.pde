@@ -100,6 +100,11 @@ class Grid {
     src.stroke(255, 0, 0);
     src.line(frameCount % widthRender, 0, frameCount % widthRender, height);
   }
+  void reset() {
+    showSequence = false;
+    showScanning = false;
+    nOfNpsShowing = 0;
+  }
 }
 
 class NavigatePoint {

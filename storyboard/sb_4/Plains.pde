@@ -36,7 +36,7 @@ class Plains {
   boolean plainShifting = true;
   boolean alligning = true;
   float plainShift = 150;
-
+  float drate = 0;
   Plains() {
     monitorGrid = new boolean[monitorGridDim * monitorGridDim];
     for (int i = 0; i < monitorGridDim; i++) {
@@ -56,6 +56,16 @@ class Plains {
     finalLongitude = 0;
   }
 
+  void reset() {
+    alligning = true;
+    longitude = 0;
+    scanVerticalDir = false;
+    scanHeight = 0;
+
+    centerZ = -200;
+    boxDepth = 800;
+    drate = 0;
+  }
   void update() {
     // dimGroundColor();
     if (random(1) < 0.2) {
@@ -95,9 +105,9 @@ class Plains {
     }
   }
   void changeDepth(float rate) {
-    float d = map(rate, 0, 1, -190, -220);
-    centerZ = d;
-    boxDepth = map(d, -200, -400, 800, 1200);
+    drate = rate;
+    centerZ = map(drate, 0, 1, 0, -200);
+    boxDepth = map(centerZ, 0, -200, 200, 2000);
   }
   void dimGroundColor() {
     // float dim = (sin(frameCount * 0.04 + 0.5 * PI) + 1) * 0.5;
@@ -108,12 +118,12 @@ class Plains {
     if (scanningVertical) {
       if (!scanning) {
         if (!scanVerticalDir) {
-          scanHeight += 2 * random(0.5) + 1;
+          scanHeight += 3 * random(0.5) + 3;
           if (scanHeight > boxHeight) {
             scanVerticalDir = true;
           }
         } else {
-          scanHeight -= 2 * random(0.5) + 1;
+          scanHeight -= 3 * random(0.5) + 3;
           if (scanHeight < 0) {
             scanVerticalDir = false;
             scanningVertical = false;

@@ -6,6 +6,7 @@
 uniform mat4 transform;
 uniform float uTime;
 uniform float size;
+uniform float wave;
 
 in vec4 position;
 in vec4 color;
@@ -176,7 +177,7 @@ float cnoise(vec3 P)
 // float smoothy = 0.01;
 float smoothy = 0.005;
 // float wave = 4.0;
-float wave = 20.0;
+
 // float size = 0.3;
 
 void main() {

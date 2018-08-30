@@ -8,14 +8,20 @@ class Octa {
   float octaTime = 0;
   float octaTimeUnit = 1500;
   float scale = 1.0;
-  float size = 0.2;
+  float size = 1.2;
+  float wave = 6.0;
 
   Octa() {
     octaShader = loadShader("octahedron/frag.glsl", "octahedron/vert.glsl");
     octaShader.set("size", size);
+    octaShader.set("wave", wave);
     octa = createOctahedron(heightRender * 0.2, 4);
     octaAlpha = 0;
     initLines();
+  }
+  void reset() {
+    octaTimeUnit = 1500;
+    change(1.2, 6.0, 1.0);
   }
   void draw(PGraphics src) {
     update();
@@ -30,7 +36,6 @@ class Octa {
     src.shape(octa);
     src.resetShader();
     src.popMatrix();
-
     // drawLines(src);
   }
   void draw(PGraphics src, float _x, float _y, float _z) {
@@ -48,6 +53,8 @@ class Octa {
     src.popMatrix();
   }
   void update() {
+    // mouseAdjust();
+
     if (octaMerging) {
       // println((millis() - octaTime) / octaTimeUnit);
       octaShader.set("uTime", (millis() - octaTime + octaTimeShift) / octaTimeUnit);
@@ -55,7 +62,7 @@ class Octa {
       octaShader.set("uTime", (octaTimeOffset - (millis() - octaTime)) / octaTimeUnit);
     }
   }
-  void reset() {
+  void resetTiming() {
     octaTime = millis();
     octaTimeShift = 0;
   }
@@ -79,6 +86,33 @@ class Octa {
     }
   }
 
+
+  void mouseAdjust() {
+    float w = map(mouseX, 0, width , 1.0, 20.0);
+    wave = w;
+    println("wave: " + wave);
+    octaShader.set("wave", wave);
+
+    float s = map(mouseY, 0, height , 0.3, 2.0);
+    size = s;
+    println("size: " + size);
+    octaShader.set("size", size);
+
+  }
+
+  void change(float s, float w) {
+    size = s;
+    wave = w;
+    octaShader.set("size", size);
+    octaShader.set("wave", wave);
+  }
+  void change(float s, float w, float sc) {
+    size = s;
+    wave = w;
+    scale = sc;
+    octaShader.set("size", size);
+    octaShader.set("wave", wave);
+  }
   void changeSize() {
     size = random(0.1, 1.5);
     octaShader.set("size", size);
