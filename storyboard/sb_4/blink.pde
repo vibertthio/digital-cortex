@@ -17,8 +17,8 @@ void blink(PGraphics src) {
     } else {
       src.fill(255);
     }
-    src.rectMode(CORNER);
-    src.rect(0, 0, widthRender, heightRender);
+    src.rectMode(CENTER);
+    src.rect(widthRender * 0.5, heightRender * 0.5, widthRender, heightRender);
     src.popMatrix();
 
     if (blinkRed && blinkSwitching) {

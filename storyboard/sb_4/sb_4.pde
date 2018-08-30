@@ -59,11 +59,11 @@ void setup() {
   // yOff = 0;
 
   // 3. live
-  // fullScreen(OPENGL, SPAN);
-  // widthRender = 1216;
-  // heightRender = 1000;
-  // xOff = 202;
-  // yOff = 0;
+   // fullScreen(OPENGL, SPAN);
+   // widthRender = 1216;
+   // heightRender = 1000;
+   // xOff = 202;
+   // yOff = 0;
 
   smooth(8);
 
