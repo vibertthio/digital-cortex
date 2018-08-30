@@ -232,7 +232,7 @@ void oscEvent(OscMessage msg) {
     if (msg.checkTypetag("i")) {
       int value = msg.get(0).intValue();
       if (value == 1) {
-        rec.startFadeIn();
+        rec.startFadeIn(10000);
         pdControlPhase = 1;
       } else if (value == 2) {
         pdControlPhase = 2;
