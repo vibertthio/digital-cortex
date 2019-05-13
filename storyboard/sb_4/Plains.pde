@@ -49,8 +49,10 @@ class Plains {
     normalLongitude = longitude;
     finalLongitude = longitude;
 
-    boxWidth = 934;
-    boxHeight = 768;
+    // boxWidth = 934;
+    // boxHeight = 768;
+    boxWidth = widthRender;
+    boxHeight = heightRender;
 
     longitude = 0;
     finalLongitude = 0;

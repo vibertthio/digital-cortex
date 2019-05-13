@@ -13,6 +13,7 @@ float unit;
 float rectWidth;
 
 int mode = 0;
+// int mode = 11;
 int pdControlPhase = 0;
 int[][] noiseChoice = {
   { 1, 2, 3 },
@@ -45,10 +46,16 @@ void setup() {
   // size(1920, 1080, OPENGL);
 
   // 1. debug full
+  // size(1600, 1000, OPENGL);
+  // widthRender = 1216;
+  // heightRender = 1000;
+  // xOff = 202;
+  // yOff = 0;
+
   size(1600, 1000, OPENGL);
-  widthRender = 1216;
+  widthRender = 1600;
   heightRender = 1000;
-  xOff = 202;
+  xOff = 0;
   yOff = 0;
 
   // 2. debug small
